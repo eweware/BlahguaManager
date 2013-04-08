@@ -1,0 +1,25 @@
+﻿<Window x:Class="BlahguaManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Background="Blue" Foreground="White" FontSize="18">Blahgua Importer</TextBlock>
+        <Label  Margin="4" Content="CSV File" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"/>
+        <TextBox x:Name="FileNameBox" Margin="4" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="filename" VerticalAlignment="Top"/>
+        <Button  Margin="4" Grid.Row="1" Grid.Column="2"  Content="Select File" Click="DoSelectFile"/>
+        <Button  Margin="4" Grid.Row="1" Grid.Column="3"  Content="Import Blahs" />
+        <DataGrid  x:Name="BlahDataTable"  Margin="4" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+
+    </Grid>
+</Window>
