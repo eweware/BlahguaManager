@@ -6,6 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,7 +20,9 @@
         <TextBox x:Name="FileNameBox" Margin="4" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="filename" VerticalAlignment="Top"/>
         <Button  Margin="4" Grid.Row="1" Grid.Column="2"  Content="Select File" Click="DoSelectFile"/>
         <Button  Margin="4" Grid.Row="1" Grid.Column="3"  Content="Import Blahs" Click="DoImportBlahs" />
-        <DataGrid  x:Name="BlahDataTable"  Margin="4" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+        <ProgressBar x:Name="ImportProgress" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Height="10" />
+        <DataGrid  x:Name="BlahDataTable"  Margin="4" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"/>
+
 
     </Grid>
 </Window>

@@ -16,6 +16,7 @@ namespace BlahguaManager
     public class WebServiceHelper
     {
         public Dictionary<string, string> groupNames = null;
+        public Dictionary<string, string> userGroupNames = null;
         public Dictionary<string, string> blahTypes = null;
         private CookieContainer sessionCookie = null;
 
@@ -89,6 +90,9 @@ namespace BlahguaManager
             WebRequest request = WebRequest.Create(commandURI);
             if (sessionCookie == null)
                 sessionCookie = new CookieContainer();
+            ((HttpWebRequest)request).CookieContainer = sessionCookie;
+            request.Timeout = 2000;
+            ((HttpWebRequest)request).KeepAlive = true;
             
             Stream dataStream;
             bool failed;
@@ -108,7 +112,7 @@ namespace BlahguaManager
 
             // Get the response.
             string responseFromServer = "";
-            ((HttpWebRequest)request).CookieContainer = sessionCookie;
+
             WebResponse response;
             try
             {
@@ -133,6 +137,7 @@ namespace BlahguaManager
             reader.Close();
             dataStream.Close();
             response.Close();
+            response.Dispose();
 
             if (failed)
             {
@@ -260,7 +265,7 @@ namespace BlahguaManager
 
             string jsonData = "{\"blahVote\":0, \"text\":\"" + newComment + "\"}";
 
-
+            
             return PostDataToService(commandURI, jsonData);
 
         }
@@ -294,16 +299,7 @@ namespace BlahguaManager
         }
 
 
-        public string GetAllGroups()
-        {
-            string queryStr = CreateRESTBaseURL("groups");
-
-            Uri commandURI = CreateURIfromBaseURL(queryStr);
-
-            return GetDataFromService(commandURI);
-
-        }
-
+ 
 
 
 
@@ -315,6 +311,18 @@ namespace BlahguaManager
         public string GetUserGroups()
         {
             string UserStr = CreateRESTBaseURL("userGroups");
+            string queryArgs = "";
+
+            Uri commandURI = CreateURIfromBaseURL(UserStr, queryArgs);
+
+            string resultStr = GetDataFromService(commandURI);
+
+            return resultStr; // AddNameAndDescToGroupList(resultStr);
+        }
+
+        public string GetAllGroups()
+        {
+            string UserStr = CreateRESTBaseURL("groups");
             string queryArgs = "";
 
             Uri commandURI = CreateURIfromBaseURL(UserStr, queryArgs);
@@ -340,7 +348,7 @@ namespace BlahguaManager
             string jsonData;
 
             jsonData = "{\"G\":\"" + groupID + "\"}";
-
+            userGroupNames = null;
             return PostDataToService(commandURI, jsonData);
 
 
@@ -389,17 +397,21 @@ namespace BlahguaManager
             string jsonData;
 
             jsonData = "{}";
-            groupNames = null;
-
-            return PostDataToService(commandURI, jsonData);
+            userGroupNames = null;
+            string resultStr = PostDataToService(commandURI, jsonData);
+            sessionCookie = null;
+            return resultStr; 
         }
 
         public Boolean UserHasChannel(string channelName)
         {
-            if (groupNames == null)
+            if (userGroupNames == null)
                 LoadUserChannels();
 
-            return groupNames.Values.Contains(channelName);
+            if (userGroupNames.Count == 0)
+                return false;
+            else
+                return userGroupNames.Keys.Contains(channelName);
 
         }
 
@@ -430,7 +442,7 @@ namespace BlahguaManager
                 foreach (string curGroup in groups)
                 {
                     string idString = GetJSONProperty(curGroup, "_id");
-                    string nameStr = GetJSONProperty(curGroup, "name");
+                    string nameStr = GetJSONProperty(curGroup, "N");
                     blahTypes[nameStr] = idString;
                 }
             }
@@ -449,7 +461,7 @@ namespace BlahguaManager
 
         public void LoadUserChannels()
         {
-            groupNames = new Dictionary<string, string>();
+            userGroupNames = new Dictionary<string, string>();
             string resultStr = GetUserGroups();
             resultStr = resultStr.Substring(1, resultStr.Length - 2);
             string[] split = new string[] { "},{" };
@@ -460,8 +472,26 @@ namespace BlahguaManager
             foreach (string curGroup in groups)
             {
                 string idString = GetJSONProperty(curGroup, "_id");
-                string nameStr = GetJSONProperty(curGroup, "name");
-                blahTypes[nameStr] = idString;
+                string nameStr = GetJSONProperty(curGroup, "N");
+                userGroupNames[nameStr] = idString;
+            }
+        }
+
+        public void LoadAllChannels()
+        {
+            groupNames = new Dictionary<string, string>();
+            string resultStr = GetAllGroups();
+            resultStr = resultStr.Substring(1, resultStr.Length - 2);
+            string[] split = new string[] { "},{" };
+            string[] groups = resultStr.Split(split, StringSplitOptions.RemoveEmptyEntries);
+            List<string> newList = new List<string>();
+            groups[0] = groups[0].Substring(groups[0].IndexOf('{') + 1);
+
+            foreach (string curGroup in groups)
+            {
+                string idString = GetJSONProperty(curGroup, "_id");
+                string nameStr = GetJSONProperty(curGroup, "N");
+                groupNames[nameStr] = idString;
             }
 
         }
@@ -472,7 +502,7 @@ namespace BlahguaManager
 
             if (groupNames == null)
             {
-                LoadUserChannels();
+                LoadAllChannels();
             }
 
 
@@ -487,14 +517,24 @@ namespace BlahguaManager
             return typeID;
         }
 
+        public bool AddFileToBlah(string blahId, string fileName)
+        {
+            NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("objectType", "B");
+            nvc.Add("primary", "true");
+            nvc.Add("objectId", blahId);
 
+            HttpUploadFile("http://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
+            return true;
+        }
 
-        public static void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
+        private void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
             HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
+            wr.CookieContainer = sessionCookie;
             wr.ContentType = "multipart/form-data; boundary=" + boundary;
             wr.Method = "POST";
             wr.KeepAlive = true;
@@ -537,6 +577,9 @@ namespace BlahguaManager
                 Stream stream2 = wresp.GetResponseStream();
                 StreamReader reader2 = new StreamReader(stream2);
                 //log.Debug(string.Format("File uploaded, server response is: {0}", reader2.ReadToEnd()));
+                wresp.Close();
+                wresp.Dispose();
+                wresp = null;
             }
             catch (Exception ex)
             {
@@ -544,6 +587,7 @@ namespace BlahguaManager
                 if (wresp != null)
                 {
                     wresp.Close();
+                    wresp.Dispose();
                     wresp = null;
                 }
             }

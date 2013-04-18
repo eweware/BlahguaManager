@@ -18,6 +18,7 @@ using System.Net;
 using System.Data.OleDb;
 using System.IO;
 using System.Collections.Specialized;
+using System.Windows.Threading;
 
 namespace BlahguaManager
 {
@@ -26,17 +27,28 @@ namespace BlahguaManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        string CurrentFileName;
+        DispatcherTimer dispatcherTimer;
+        int curBlah;
+
+
+
+
         public MainWindow()
         {
             InitializeComponent();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            
 
         }
 
         private void DoSelectFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".csv";
-            dlg.Filter = "CSV files (.csv)|*.csv";
+            dlg.DefaultExt = ".xlsx";
+            dlg.Filter = "Excel files (.xlsx)|*.xlsx";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -46,7 +58,8 @@ namespace BlahguaManager
                 // Open document
                 string filename = dlg.FileName;
                 FileNameBox.Text = filename;
-                DoImportCSV(filename);
+                //DoImportCSV(filename);
+                DoImportExcel(filename);
             }
         }
 
@@ -59,6 +72,33 @@ namespace BlahguaManager
 
         }
 
+        public void DoImportExcel(string fileName)
+        {
+            CurrentFileName = fileName;
+            DataTable newTable = GetDataTableFromExcel(fileName);
+            newTable.Columns.Add("Status");
+            BlahDataTable.DataContext = newTable;
+            BlahDataTable.ItemsSource = newTable.DefaultView;
+
+        }
+
+        static DataTable GetDataTableFromExcel(string path)
+        {
+            string pathOnly = System.IO.Path.GetDirectoryName(path);
+            string fileName = System.IO.Path.GetFileName(path);
+
+            var connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0}; Extended Properties=Excel 12.0;", path);
+
+            var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$] WHERE CHANNEL IS NOT NULL", connectionString);
+            var ds = new DataSet();
+
+            adapter.Fill(ds, "anyNameHere");
+
+            DataTable data = ds.Tables["anyNameHere"];
+
+            return data;
+        }
+
         static DataTable GetDataTableFromCsv(string path, bool isFirstRowHeader)
         {
             string header = isFirstRowHeader ? "Yes" : "No";
@@ -66,7 +106,7 @@ namespace BlahguaManager
             string pathOnly = System.IO.Path.GetDirectoryName(path);
             string fileName = System.IO.Path.GetFileName(path);
 
-            string sql = @"SELECT * FROM [" + fileName + "]";
+            string sql = @"SELECT * FROM [" + fileName + "] ";
 
             using (OleDbConnection connection = new OleDbConnection(
                       @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + pathOnly +
@@ -94,32 +134,48 @@ namespace BlahguaManager
             return row;
         }
 
-       
+       delegate void ImportBlahsDelegate(string someItem);
 
-        private void DoImportBlahs(object sender, RoutedEventArgs e)
-        {
+       private void DoImportBlahs(object sender, RoutedEventArgs e)
+       {
+           curBlah = 0;
+           ImportProgress.Maximum = ((DataTable)BlahDataTable.DataContext).Rows.Count;
+           dispatcherTimer.Start();
+       }
+
+       private void dispatcherTimer_Tick(object sender, EventArgs e)
+       {
             DataTable theTable = (DataTable)BlahDataTable.DataContext;
+            dispatcherTimer.Stop();
 
             if (theTable != null) 
             {
-                for (int i = 0; i < theTable.Rows.Count; i++)
-                {
-                    DataRow curRow = theTable.Rows[i];
-                    BlahImportItem curItem = new BlahImportItem(curRow);
-                    string resultStr = curItem.ImportBlah();
-                    if (resultStr == "ok")
-                    {
-                        curRow["status"] = resultStr;
-                        GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Green);
+                
+                string resultStr;
 
-                    }
-                    else
-                    {
-                        curRow["status"] = resultStr;
-                        GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Red);
-                    }
+                DataRow curRow = theTable.Rows[curBlah];
+                BlahImportItem curItem = new BlahImportItem(curRow);
+
+                resultStr = curItem.ImportBlah();
+                if (resultStr == "ok")
+                {
+                        
+                    //GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Green);
 
                 }
+                else
+                {
+                        
+                    //GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Red);
+                }
+                
+                curBlah++;
+                curRow["status"] = resultStr; 
+                ImportProgress.Value = curBlah;
+                if (curBlah >= theTable.Rows.Count)
+                    dispatcherTimer.Stop();
+                else
+                    dispatcherTimer.Start();
 
             }
 

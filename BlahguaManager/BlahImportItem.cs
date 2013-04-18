@@ -81,9 +81,9 @@ namespace BlahguaManager
             string paramStr = "{";
             paramStr += createJsonParameter("G", GetChannelId()) + ", ";
             paramStr += createJsonParameter("T", Title) + ", ";
-            paramStr += createJsonParameter("Y", GetBlahTypeId()) + ", ";
+            paramStr += createJsonParameter("Y", GetBlahTypeId());
             if (Body != "")
-                paramStr += createJsonParameter("F", GetBlahTypeId()) + ", ";
+                paramStr += ", " + createJsonParameter("F", Body);
 
             // handle the blah types
             if (this.BlahType == "polls")
@@ -92,43 +92,65 @@ namespace BlahguaManager
                 ArrayList pollItems = new ArrayList();
                 string curPollText = "";
 
-                while ((pollCount < 10) && (GetData(pollCount) != ""))
+                while (pollCount < 10)
                 {
-                    if (curPollText != "")
-                        curPollText += ", ";
-                    curPollText += "{";
-                    curPollText += createJsonParameter("G", GetData(pollCount));
-                    curPollText += createJsonParameter("T", "");
-                    curPollText += "}";
+                    if (GetData(pollCount) != "")
+                    {
+                        if (curPollText != "")
+                            curPollText += ", ";
+                        curPollText += "{";
+                        curPollText += createJsonParameter("G", GetData(pollCount));
+                        curPollText += ", " + createJsonParameter("T", "");
+                        curPollText += "}";
+                    }
                     pollCount++;
                 }
-                paramStr += createJsonParameter("I", curPollText);
+                curPollText = "[" + curPollText + "]";
+                paramStr += ", " + createJsonParameter("I", curPollText, false);
             }
             else if (this.BlahType == "predicts")
             {
                 DateTime theDate = DateTime.Parse(GetData(0));
-                paramStr += createJsonParameter("E", theDate.ToShortDateString());
+                paramStr += ", " + createJsonParameter("E", theDate.ToString("o"));
             }
 
             paramStr += "}";
-
-            string theBlah = App.Blahgua.CreateBlah(paramStr);
-
-            if (theBlah != "")
+            try
             {
+                string theBlah = App.Blahgua.CreateBlah(paramStr);
 
+                if (theBlah != "")
+                {
+                    string blahId = WebServiceHelper.GetJSONProperty(theBlah, "_id");
+
+                    if (Image != "")
+                    {
+                        string curPath = ImagePath + "\\" + Image;
+                        App.Blahgua.AddFileToBlah(blahId, curPath);
+                    }
+
+                    resultStr = "ok";
+                }
+
+            }
+            catch (Exception exp)
+            {
+                resultStr = exp.Message;
             }
 
             return resultStr;
         }
 
-        private string createJsonParameter(string paramName, string paramVal)
+
+        private string createJsonParameter(string paramName, string paramVal, bool quoteIt = true)
         {
             string resultStr = "";
 
-            resultStr += "\"" + paramName + "\":\"";
-            resultStr += paramVal;
-            resultStr += "\" ";
+            resultStr += "\"" + paramName + "\":";
+            if (quoteIt)
+                resultStr += "\"" + paramVal + "\"";
+            else
+                resultStr += paramVal;
 
             return resultStr;
         }
@@ -156,6 +178,7 @@ namespace BlahguaManager
         private void SignInUser()
         {
             App.Blahgua.SignInUser(Username, "secret");
+            CurrentUserName = Username;
         }
 
         private void CreateUser()
@@ -176,7 +199,7 @@ namespace BlahguaManager
 
         private void JoinUserToChannel()
         {
-            App.Blahgua.JoinGroup(Channel);
+            App.Blahgua.JoinGroup(GetChannelId());
         }
 
 
