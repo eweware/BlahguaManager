@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlahguaManager", "BlahguaImporter\BlahguaManager.csproj", "{53A6CC79-0342-4E76-BDAD-143C00E9554C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlahguaManager", "BlahguaManager\BlahguaManager.csproj", "{53A6CC79-0342-4E76-BDAD-143C00E9554C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

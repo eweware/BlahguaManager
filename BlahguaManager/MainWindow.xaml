@@ -18,7 +18,7 @@
         <Label  Margin="4" Content="CSV File" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"/>
         <TextBox x:Name="FileNameBox" Margin="4" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="filename" VerticalAlignment="Top"/>
         <Button  Margin="4" Grid.Row="1" Grid.Column="2"  Content="Select File" Click="DoSelectFile"/>
-        <Button  Margin="4" Grid.Row="1" Grid.Column="3"  Content="Import Blahs" />
+        <Button  Margin="4" Grid.Row="1" Grid.Column="3"  Content="Import Blahs" Click="DoImportBlahs" />
         <DataGrid  x:Name="BlahDataTable"  Margin="4" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
 
     </Grid>

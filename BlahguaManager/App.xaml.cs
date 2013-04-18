@@ -8,10 +8,12 @@ using System.Windows;
 
 namespace BlahguaManager
 {
+    
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+        public static WebServiceHelper Blahgua = new WebServiceHelper();    
     }
 }

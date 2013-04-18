@@ -29,6 +29,7 @@ namespace BlahguaManager
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void DoSelectFile(object sender, RoutedEventArgs e)
@@ -79,6 +80,56 @@ namespace BlahguaManager
                 return dataTable;
             }
         }
+
+        public static DataGridRow GetRow(DataGrid grid, int index)
+        {
+            DataGridRow row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
+            if (row == null)
+            {
+                // May be virtualized, bring into view and try again.
+                grid.UpdateLayout();
+                grid.ScrollIntoView(grid.Items[index]);
+                row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
+            }
+            return row;
+        }
+
+       
+
+        private void DoImportBlahs(object sender, RoutedEventArgs e)
+        {
+            DataTable theTable = (DataTable)BlahDataTable.DataContext;
+
+            if (theTable != null) 
+            {
+                for (int i = 0; i < theTable.Rows.Count; i++)
+                {
+                    DataRow curRow = theTable.Rows[i];
+                    BlahImportItem curItem = new BlahImportItem(curRow);
+                    string resultStr = curItem.ImportBlah();
+                    if (resultStr == "ok")
+                    {
+                        curRow["status"] = resultStr;
+                        GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Green);
+
+                    }
+                    else
+                    {
+                        curRow["status"] = resultStr;
+                        GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Red);
+                    }
+
+                }
+
+            }
+
+        }
+
+       
+
+        
+
+        
 
         
     }
