@@ -6,7 +6,9 @@ using System.Net;
 using System.IO;
 using System.Collections.Specialized;
 using System.Text;
-
+using Amazon.S3;
+using Amazon.S3.Model;
+using System.Windows;
 
 namespace BlahguaManager
 {
@@ -19,13 +21,60 @@ namespace BlahguaManager
         public Dictionary<string, string> userGroupNames = null;
         public Dictionary<string, string> blahTypes = null;
         private CookieContainer sessionCookie = null;
-
+        private StreamWriter logFile = null;
+        private String currentFileName = "";
+        static AmazonS3 client;
 
         public WebServiceHelper()
         {
             //
             // TODO: Add constructor logic here
+
+            client = Amazon.AWSClientFactory.CreateAmazonS3Client(
+                                "AKIAIMOV7BYCGFPFVLGA", 
+                                "u8X5HGbFncW6knOScgDUBMrdLF+lrgSucmGjM0it");
             //
+ 
+        }
+
+        public void StartLogFile() 
+        {
+            try
+            {
+                if (logFile != null)
+                    StopLogFile();
+                currentFileName = "BlahguaManager-" + String.Format("{0:d-M-yyyy HH-mm-ss}", DateTime.Now) + ".log";
+                logFile = File.CreateText(currentFileName);
+                logFile.WriteLine("thread\tmethod\tURL\tJSON\tDate\tmsec\tstatusCode\tfailed");
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Error: " + exp.Message);        
+            }
+ 
+        }
+
+        public void StopLogFile()
+        {
+            logFile.Flush();
+            logFile.Close();
+            UploadFileToAmazon(currentFileName);
+            logFile = null;
+        }
+
+        public void UploadFileToAmazon(string fileName )
+        {
+
+
+            PutObjectRequest request = new PutObjectRequest();
+            request.WithFilePath(fileName)
+                   .WithBucketName("files.blahgua.com")
+                   .WithKey("blahguamanager/" + fileName);	
+            S3Response responseWithMetadata =
+                                 client.PutObject(request);
+            string theResult = responseWithMetadata.ToString();
+
+
         }
 
 
@@ -87,6 +136,9 @@ namespace BlahguaManager
 
         private string DoWebServiceRequest(string method, Uri commandURI, string JSONdata = "")
         {
+            int startTime = Environment.TickCount;
+            DateTime callDate = DateTime.Now;
+
             WebRequest request = WebRequest.Create(commandURI);
             if (sessionCookie == null)
                 sessionCookie = new CookieContainer();
@@ -132,12 +184,16 @@ namespace BlahguaManager
             // Read the content.
             responseFromServer = reader.ReadToEnd();
 
-
+            HttpStatusCode resultCode = ((HttpWebResponse)response).StatusCode;
             // Clean up the streams.
             reader.Close();
             dataStream.Close();
             response.Close();
             response.Dispose();
+
+            int endTime = Environment.TickCount;
+
+            LogCallStatus(1, method, commandURI, JSONdata, callDate, startTime, endTime, resultCode, failed);
 
             if (failed)
             {
@@ -147,6 +203,25 @@ namespace BlahguaManager
             return responseFromServer;
         }
 
+
+        private void LogCallStatus(int threadId, string method, Uri command, string JSON, DateTime callDate, int startTime, int endTime, HttpStatusCode resultCode, bool failed) 
+        {
+            if (logFile != null)
+            {
+                string newLine = "";
+
+                newLine += threadId.ToString() + "\t";
+                newLine += method + "\t";
+                newLine += command.ToString() + "\t";
+                newLine += JSON + "\t";
+                newLine += callDate.ToFileTime().ToString() + "\t";
+                newLine += (endTime - startTime).ToString() + "\t";
+                newLine += resultCode.ToString() + "\t";
+                newLine += failed.ToString();
+
+                logFile.WriteLine(newLine);
+            }
+        }
 
 
 
@@ -291,6 +366,11 @@ namespace BlahguaManager
                 startIndex += propName.Length + 4;
 
                 int endIndex = json.IndexOf('\"', startIndex + 1);
+                if (endIndex == -1)
+                {
+                    endIndex = json.IndexOf("}", startIndex + 1);
+                }
+
                 resultStr = json.Substring(startIndex, endIndex - startIndex);
             }
 
@@ -357,21 +437,26 @@ namespace BlahguaManager
         public Boolean CheckUserExists(string userName)
         {
             Boolean exists = false;
-            string GroupStr = CreateRESTBaseURL("users/check/username");
+            string GroupStr = CreateRESTBaseURL("users/check/username/" + userName);
 
             Uri commandURI = CreateURIfromBaseURL(GroupStr);
             string jsonData;
 
-            jsonData = "{\"U\":\"" + userName + "\"}";
+            jsonData = "{}";
 
             try
             {
-                PostDataToService(commandURI, jsonData);
-                exists = false;
+                string result = PostDataToService(commandURI, jsonData);
+
+                exists = result.Contains("true");
             }
             catch (WebException exp)
             {
                 exists = true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
 
             return exists;
@@ -464,16 +549,19 @@ namespace BlahguaManager
             userGroupNames = new Dictionary<string, string>();
             string resultStr = GetUserGroups();
             resultStr = resultStr.Substring(1, resultStr.Length - 2);
-            string[] split = new string[] { "},{" };
-            string[] groups = resultStr.Split(split, StringSplitOptions.RemoveEmptyEntries);
-            List<string> newList = new List<string>();
-            groups[0] = groups[0].Substring(groups[0].IndexOf('{') + 1);
-
-            foreach (string curGroup in groups)
+            if (resultStr != "")
             {
-                string idString = GetJSONProperty(curGroup, "_id");
-                string nameStr = GetJSONProperty(curGroup, "N");
-                userGroupNames[nameStr] = idString;
+                string[] split = new string[] { "},{" };
+                string[] groups = resultStr.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                List<string> newList = new List<string>();
+                groups[0] = groups[0].Substring(groups[0].IndexOf('{') + 1);
+
+                foreach (string curGroup in groups)
+                {
+                    string idString = GetJSONProperty(curGroup, "_id");
+                    string nameStr = GetJSONProperty(curGroup, "N");
+                    userGroupNames[nameStr.ToLower()] = idString;
+                }
             }
         }
 
@@ -491,7 +579,7 @@ namespace BlahguaManager
             {
                 string idString = GetJSONProperty(curGroup, "_id");
                 string nameStr = GetJSONProperty(curGroup, "N");
-                groupNames[nameStr] = idString;
+                groupNames[nameStr.ToLower()] = idString;
             }
 
         }
@@ -519,13 +607,18 @@ namespace BlahguaManager
 
         public bool AddFileToBlah(string blahId, string fileName)
         {
-            NameValueCollection nvc = new NameValueCollection();
-            nvc.Add("objectType", "B");
-            nvc.Add("primary", "true");
-            nvc.Add("objectId", blahId);
+            if (File.Exists(fileName))
+            {
+                NameValueCollection nvc = new NameValueCollection();
+                nvc.Add("objectType", "B");
+                nvc.Add("primary", "true");
+                nvc.Add("objectId", blahId);
 
-            HttpUploadFile("http://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
-            return true;
+                HttpUploadFile("http://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
+                return true;
+            }
+            else 
+                return false;
         }
 
         private void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)

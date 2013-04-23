@@ -140,6 +140,7 @@ namespace BlahguaManager
        {
            curBlah = 0;
            ImportProgress.Maximum = ((DataTable)BlahDataTable.DataContext).Rows.Count;
+           App.Blahgua.StartLogFile();
            dispatcherTimer.Start();
        }
 
@@ -173,7 +174,10 @@ namespace BlahguaManager
                 curRow["status"] = resultStr; 
                 ImportProgress.Value = curBlah;
                 if (curBlah >= theTable.Rows.Count)
+                {
                     dispatcherTimer.Stop();
+                    App.Blahgua.StopLogFile();
+                }
                 else
                     dispatcherTimer.Start();
 

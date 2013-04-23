@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Windows.Data;
+using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 
 namespace BlahguaManager
 {
@@ -20,6 +22,7 @@ namespace BlahguaManager
         public string Body;
         public string Image;
         public string ImagePath;
+        public DateTime PredictionDate;
         public string Data1;
         public string Data2;
         public string Data3;
@@ -35,19 +38,25 @@ namespace BlahguaManager
 
         public BlahImportItem(DataRow curRow)
         {
-            Channel = curRow[0].ToString();
-            Username = curRow[1].ToString();
-            BlahType = curRow[2].ToString();
-            Title = curRow[3].ToString();
-            Body = curRow[4].ToString();
-            Image = curRow[5].ToString();
-            ImagePath = curRow[6].ToString();
+            Channel = curRow["Channel"].ToString().ToLower();
+            Username = curRow["Username"].ToString();
+            BlahType = curRow["Blah Type"].ToString().ToLower();
+            Title = curRow["Title"].ToString();
+            Body = curRow["Body"].ToString();
+            Image = curRow["Image"].ToString();
+            ImagePath = curRow["Image path"].ToString();
+            if (curRow["Date"] is System.DBNull)
+            {
+                PredictionDate = DateTime.Now;
+            }
+            else PredictionDate = (DateTime)curRow["Date"];
+
             _dataRow = curRow;
         }
 
         public string GetData(int dataIndex)
         {
-            return _dataRow[7 + dataIndex].ToString();
+            return _dataRow[8 + dataIndex].ToString();
         }
 
         public string ImportBlah()
@@ -110,8 +119,7 @@ namespace BlahguaManager
             }
             else if (this.BlahType == "predicts")
             {
-                DateTime theDate = DateTime.Parse(GetData(0));
-                paramStr += ", " + createJsonParameter("E", theDate.ToString("o"));
+                paramStr += ", " + createJsonParameter("E", PredictionDate.ToString("o"));
             }
 
             paramStr += "}";
@@ -141,6 +149,19 @@ namespace BlahguaManager
             return resultStr;
         }
 
+        private string FormatJSONString(string inputStr)
+        {
+            string newStr;
+
+            inputStr = inputStr.Replace("\r\n", "[_r;");
+            inputStr = inputStr.Replace("\n", "[_r;");
+            inputStr = inputStr.Replace("\r", "[_r;");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            newStr = serializer.Serialize(inputStr);
+
+            return newStr;
+        }
+
 
         private string createJsonParameter(string paramName, string paramVal, bool quoteIt = true)
         {
@@ -148,9 +169,9 @@ namespace BlahguaManager
 
             resultStr += "\"" + paramName + "\":";
             if (quoteIt)
-                resultStr += "\"" + paramVal + "\"";
-            else
-                resultStr += paramVal;
+                paramVal = FormatJSONString(paramVal);
+            
+           resultStr += paramVal;
 
             return resultStr;
         }
