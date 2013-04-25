@@ -42,6 +42,7 @@ build/
 *.pidb
 *.log
 *.scc
+*.webtestresult
 
 # Visual C++ cache files
 ipch/
