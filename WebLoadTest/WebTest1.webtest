@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="WebTest1" Id="bbc293fd-a866-4654-9785-2cb572959e06" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="" StopOnError="False" RecordedResultFile="WebTest1.4847f059-6f20-4377-9585-1c4c691afa80.rec.webtestresult">
+  <Items>
+    <Request Method="GET" Guid="d40effc2-5db9-467b-9cd1-31f76557f5a5" Version="1.1" Url="http://beta.blahgua.com/" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <DependentRequests>
+        <Request Method="GET" Guid="f29252bb-7bb3-48dd-8095-d5e0c5f3d1ca" Version="1.1" Url="http://themes.googleusercontent.com/static/fonts/arimo/v4/kJziZB9mN1Zz67hE4Xj10w.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
+        <Request Method="GET" Guid="7ae771e7-9b7d-4d92-b731-8f452aa0ebb0" Version="1.1" Url="http://themes.googleusercontent.com/static/fonts/arimo/v4/5Pu1hU3bOP0NyOZx3DCeVvesZW2xOQ-xsNqO47m55DA.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
+        <Request Method="GET" Guid="d81fa6eb-2b13-4c02-8a25-5f288ac205c7" Version="1.1" Url="http://themes.googleusercontent.com/static/fonts/arimo/v4/thDv13z50gThh9VG9EA2iA.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
+        <Request Method="GET" Guid="d4154d8f-5f29-47f1-b104-f3f9590ec145" Version="1.1" Url="http://themes.googleusercontent.com/static/fonts/arimo/v4/_K7sg-ijHdmkwPzV9FiqaFQlYEbsez9cZjKsNMjLOwM.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
+        <Request Method="GET" Guid="e6722bd3-3412-484d-bec5-5d612cce0656" Version="1.1" Url="http://blahgua-webapp.s3.amazonaws.com/pages/BlahPreview.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
+        <Request Method="GET" Guid="ef0fdd68-aa85-4c05-b8d8-48c7a1dd513d" Version="1.1" Url="http://beta.blahgua.com/v2/groups/featured" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+        <Request Method="GET" Guid="b87f4240-fa20-4cc3-94ad-d5d076e59437" Version="1.1" Url="http://beta.blahgua.com/v2/blahs/types" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+      </DependentRequests>
+    </Request>
+    <Request Method="GET" Guid="b8d680d7-7ef3-4b0b-9850-bc0d76b5e807" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="0d881450-e3ef-4e2c-bc2c-b0c43a3cea6e" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="ff4aa4ed-6513-4cba-880f-114390f07e64" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="49f5de43-9cb7-4470-9c68-830fcb9401fd" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="f99a307b-4c11-4c06-a38c-a303c82ef756" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="4843496d-bac5-4bd5-81b5-eb41f4098a50" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="a16029bd-e385-41b7-9bb6-e9aa7889cafe" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="b80faaaa-fd6f-48d7-add0-bd2fbc0c4622" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b4/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="6dc1c293-b02c-4b81-a4cf-5c5e14966123" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="59915ceb-4754-45c7-9000-6493c6340484" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="17d9b2e7-bf6b-4cb0-9ab3-250dc957394d" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="bd13edb1-8acc-4c41-9e93-92c669b2d0e8" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2564f347-41f6-4118-96f9-421f77f0a422" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="775a84ef-ac80-427c-ae90-0c2678520cce" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="8260933f-19ba-4d30-bc1d-c567fd7393f4" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="7273ce1d-d431-440b-b5ef-3a815e8ea578" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="12011fd9-a543-47bf-9f76-b1a0ecdb8f4e" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2fd90540-86e7-4081-bb9f-1f754d5c4158" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="db022899-4acc-4d98-bd34-2c3d56f7ecc6" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="d1074e17-f1c4-42a9-a275-2cce86055b94" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="5f0a7a36-dbe2-4504-8220-eb307a2d3710" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2ff1d579-d83e-4345-a684-14476e2374be" Version="1.1" Url="http://beta.blahgua.com/v2/blahs/51763d49e4b043ab57d41d65" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="511e4932-6d6f-4ab7-a520-df761fe61fc1" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2cd6c5bd-7930-448f-8fca-4d0b3b4afb3d" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b5" RecordedValue="51763234e4b06baa8b19f8b5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="ff505d7a-e46d-4939-a765-2798549052b7" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b5/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="23fb1f42-6e0f-418f-ad21-37b3acabebb9" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b5" RecordedValue="51763234e4b06baa8b19f8b5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="99c5151d-137c-4bf4-8f97-bef3587d7a3b" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b5" RecordedValue="51763234e4b06baa8b19f8b5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="58c4ef24-a328-4c80-b5ef-49f08bbc2443" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b5/viewerCount" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="e6a3c2b8-22b3-4c8f-9cc0-6f26b6075762" Version="1.1" Url="http://beta.blahgua.com/v2/blahs/5176d057e4b0adf04479501f" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="5aa9e821-dd18-42be-9794-706ff29ee776" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b5/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="83d50806-e833-440d-8feb-0c5de98bed48" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="fb7dacd2-35ba-47cc-b6d9-0771f2b9db2e" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2ece78a3-2d7e-498e-9cd0-32983e1a1d02" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="91e38c95-1e92-46b0-b3de-0e101c8ae270" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b7" RecordedValue="51763234e4b06baa8b19f8b7" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="1fd606da-cd7d-4834-9a1f-a383db061224" Version="1.1" Url="http://beta.blahgua.com/v2/blahs/517639d3e4b043ab57d41ac5" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="9fd61c32-c75d-4c28-8c69-8cf8f8e11502" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b7/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="0e5adddf-adf2-4716-bb46-569744ead886" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="dff1580a-23b7-47f0-a3db-d167d85fb6c5" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b6/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="57dc41cb-1e7d-4207-a564-26fb4bdfbba8" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="7d532464-3a09-4683-bb6e-8add81b84d07" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b6" RecordedValue="51763234e4b06baa8b19f8b6" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="8213663b-4910-43b4-b0da-5449727f3630" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="4bb02615-4422-4fc8-a93b-0bea97a00b08" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b4/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="5aca4efa-14b2-49e5-beeb-ffc53727b4b2" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="c112376e-9c3f-46c3-9a2f-a7604aa7f0cd" Version="1.1" Url="http://beta.blahgua.com/v2/users/inbox" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="start" Value="0" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="count" Value="100" RecordedValue="100" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="groupId" Value="51763234e4b06baa8b19f8b4" RecordedValue="51763234e4b06baa8b19f8b4" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="bb76e503-aa76-4c52-ae47-bba1cadeb7ab" Version="1.1" Url="http://beta.blahgua.com/v2/blahs/5176ce70e4b0adf044795014" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="{}" RecordedValue="{}" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="b8f11f18-7651-4e61-9793-bc01ec8422a6" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b4/viewerCount" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="e2addd8e-467c-4460-89a6-040786d0f729" Version="1.1" Url="http://beta.blahgua.com/v2/groups/51763234e4b06baa8b19f8b4/viewerCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=utf-8" />
+      </Headers>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" ExectuionOrder="BeforeDependents" />
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidationRuleResponseTimeGoal, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response Time Goal" Description="Validates that the response time for the request is less than or equal to the response time goal as specified on the request.  Response time goals of zero will be ignored." Level="Low" ExectuionOrder="AfterDependents">
+      <RuleParameters>
+        <RuleParameter Name="Tolerance" Value="0" />
+      </RuleParameters>
+    </ValidationRule>
+  </ValidationRules>
+</WebTest>
