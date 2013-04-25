@@ -31,17 +31,12 @@ namespace BlahguaManager
         DispatcherTimer dispatcherTimer;
         int curBlah;
 
-
-
-
         public MainWindow()
         {
             InitializeComponent();
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            
-
         }
 
         private void DoSelectFile(object sender, RoutedEventArgs e)
@@ -69,7 +64,6 @@ namespace BlahguaManager
             newTable.Columns.Add("Status");
             BlahDataTable.DataContext = newTable;
             BlahDataTable.ItemsSource = newTable.DefaultView;
-
         }
 
         public void DoImportExcel(string fileName)
@@ -79,7 +73,6 @@ namespace BlahguaManager
             newTable.Columns.Add("Status");
             BlahDataTable.DataContext = newTable;
             BlahDataTable.ItemsSource = newTable.DefaultView;
-
         }
 
         static DataTable GetDataTableFromExcel(string path)

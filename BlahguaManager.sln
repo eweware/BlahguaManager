@@ -3,7 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlahguaManager", "BlahguaManager\BlahguaManager.csproj", "{53A6CC79-0342-4E76-BDAD-143C00E9554C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{974A63C7-7B1F-4C56-AEA7-CEB674E8E30D}"
+	ProjectSection(SolutionItems) = preProject
+		BlahguaManager.vsmdi = BlahguaManager.vsmdi
+		Local.testsettings = Local.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAndLoadTestProject1", "WebAndLoadTestProject1\WebAndLoadTestProject1.csproj", "{7B0F2A62-F22F-4F60-B0DD-4214183E1377}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = BlahguaManager.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -13,6 +24,10 @@ Global
 		{53A6CC79-0342-4E76-BDAD-143C00E9554C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A6CC79-0342-4E76-BDAD-143C00E9554C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A6CC79-0342-4E76-BDAD-143C00E9554C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B0F2A62-F22F-4F60-B0DD-4214183E1377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B0F2A62-F22F-4F60-B0DD-4214183E1377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B0F2A62-F22F-4F60-B0DD-4214183E1377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B0F2A62-F22F-4F60-B0DD-4214183E1377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
