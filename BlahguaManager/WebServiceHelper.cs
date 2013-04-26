@@ -178,18 +178,25 @@ namespace BlahguaManager
                 failed = true;
             }
 
-            dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
+            HttpStatusCode resultCode = HttpStatusCode.Ambiguous;
 
-            // Read the content.
-            responseFromServer = reader.ReadToEnd();
+            if (response != null)
+            {
+                dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
 
-            HttpStatusCode resultCode = ((HttpWebResponse)response).StatusCode;
+                // Read the content.
+                responseFromServer = reader.ReadToEnd();
+                reader.Close();
+                resultCode = ((HttpWebResponse)response).StatusCode;
+                dataStream.Close();
+                response.Close();
+                response.Dispose();
+            }
+
+            
             // Clean up the streams.
-            reader.Close();
-            dataStream.Close();
-            response.Close();
-            response.Dispose();
+
 
             int endTime = Environment.TickCount;
 
