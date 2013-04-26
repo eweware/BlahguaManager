@@ -17,29 +17,24 @@ namespace WebAndLoadTestProject1
     using Microsoft.VisualStudio.TestTools.WebTesting.Rules;
     using WebTest.WebService.Plugin.Runtime;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
+    using System.Collections;
 
 
-
-    public class CodedWebTest : WebTest
+    public class ReadAndVoteTest : WebTest
     {
         static int counter = 0;
         static Random rndBase = new Random();
         static string rndCounter = DateTime.Now.Ticks.ToString();
-        string headerTestName = "Visual_Studio; Coded_Web_Test;";
-        static int instanceCounter = rndBase.Next(1000);
-        
 
         private WebServicePlugin testPlugin0 = new WebServicePlugin();
 
-        public CodedWebTest()
+        public ReadAndVoteTest()
         {
             counter++;
             this.Context.Add("DefaultGroup", "");
             this.Context.Add("SayBlahType", "");
             this.Context.Add("DefaultBlahId", "");
             this.Context.Add("UserExists", "");
-            this.Context.Add("UserLoggedIn", "");
             this.PreAuthenticate = true;
             this.PreWebTest += new EventHandler<PreWebTestEventArgs>(this.testPlugin0.PreWebTest);
             this.PostWebTest += new EventHandler<PostWebTestEventArgs>(this.testPlugin0.PostWebTest);
@@ -51,10 +46,9 @@ namespace WebAndLoadTestProject1
 
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
-            //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            string UserName = "loadtest6_" + counter.ToString();
-            //string UserName = "loadtest5_" + instanceCounter.ToString();
-
+            //string UserName = "loadtest_" + rndCounter + "_" + counter.ToString();
+            string UserName = "loadtest_" + counter.ToString();
+            bool createdUser = false;
 
             // Initialize validation rules that apply to all requests in the WebTest
             if ((this.Context.ValidationLevel >= Microsoft.VisualStudio.TestTools.WebTesting.ValidationLevel.Low))
@@ -75,8 +69,6 @@ namespace WebAndLoadTestProject1
 
             WebTestRequest request1Dependent1 = new WebTestRequest("http://beta.blahgua.com/v2/groups/featured");
             request1Dependent1.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request1Dependent1.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent1"));
-
             request1Dependent1.QueryStringParameters.Add("", "{}", false, false);
             XPathExtractionRule extractionRule1 = new XPathExtractionRule();
             extractionRule1.XPathToSearch = "//*[local-name()=\'item\']/*[local-name()=\'_id\']";
@@ -88,7 +80,6 @@ namespace WebAndLoadTestProject1
             request1Dependent1 = null;
 
             WebTestRequest request1Dependent2 = new WebTestRequest("http://beta.blahgua.com/v2/blahs/types");
-            request1Dependent2.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent2"));
             request1Dependent2.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent2.QueryStringParameters.Add("", "{}", false, false);
             XPathExtractionRule extractionRule2 = new XPathExtractionRule();
@@ -102,7 +93,6 @@ namespace WebAndLoadTestProject1
             request1Dependent2 = null;
 
             WebTestRequest request2 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
-            request2.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request2"));
             request2.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request2.QueryStringParameters.Add("start", "0", false, false);
             request2.QueryStringParameters.Add("count", "100", false, false);
@@ -113,140 +103,114 @@ namespace WebAndLoadTestProject1
             WebTestRequest request3 = new WebTestRequest(("http://beta.blahgua.com/v2/groups/"
                             + (this.Context["DefaultGroup"].ToString() + "/viewerCount")));
             request3.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request3.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request3"));
             yield return request3;
             request3 = null;
 
             WebTestRequest request4 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
             request4.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request4.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request4"));
             request4.QueryStringParameters.Add("start", "0", false, false);
             request4.QueryStringParameters.Add("count", "100", false, false);
             request4.QueryStringParameters.Add("groupId", this.Context["DefaultGroup"].ToString(), false, false);
             yield return request4;
             request4 = null;
 
-            ContextParameterExistenceRule loginInRule = new ContextParameterExistenceRule();
-            loginInRule.ContextParameterName = "UserReady";
-            loginInRule.CheckForExistence = false;
+            // check if the user exists
+            WebTestRequest request1A = new WebTestRequest("http://beta.blahgua.com/v2/users/check/username/" + UserName);
+            request1A.Method = "POST";
+            request1A.Encoding = System.Text.Encoding.GetEncoding("utf-8");
+            StringHttpBody request1ABody = new StringHttpBody();
+            request1ABody.ContentType = "application/json; charset=utf-8";
+            request1ABody.InsertByteOrderMark = false;
+            request1ABody.BodyString = "";
+            request1A.Body = request1ABody;
+            XPathExtractionRule extractionRule1a = new XPathExtractionRule();
+            extractionRule1a.XPathToSearch = "//*[local-name()=\'ok\']";
+            extractionRule1a.Index = 0;
+            extractionRule1a.ExtractRandomMatch = false;
+            extractionRule1a.ContextParameterName = "UserExists";
+            request1A.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule1a.Extract);
+            yield return request1A;
 
-            int maxIterationsLogin = 3;
-            bool advanceDataCursorsLogIn = false;
-            this.BeginLoop(loginInRule, maxIterationsLogin, advanceDataCursorsLogIn);
+            // make the conditioner
+            StringComparisonRule conditionalRule2 = new StringComparisonRule();
+            conditionalRule2.ContextParameterName = "UserExists";
+            conditionalRule2.ComparisonOperator = StringComparisonOperator.Equality;
+            conditionalRule2.Value = "false";
+            conditionalRule2.IgnoreCase = true;
+            conditionalRule2.UseRegularExpression = false;
 
-            for (; this.ExecuteConditionalRule(loginInRule); )
+            this.BeginCondition(conditionalRule2);
+
+            if (this.ExecuteConditionalRule(conditionalRule2))
             {
+                WebTestRequest requestA = new WebTestRequest("http://beta.blahgua.com/v2/users");
+                requestA.ThinkTime = 1;
+                requestA.Method = "POST";
+                StringHttpBody requestABody = new StringHttpBody();
+                requestABody.ContentType = "application/json; charset=utf-8";
+                requestABody.InsertByteOrderMark = false;
+                requestABody.BodyString = "{\"N\":\"" + UserName + "\",\"pwd\":\"Sheep\"}";
+                requestA.Body = requestABody;
+                yield return requestA;
+                requestA = null;
+                LastResponseCodeRule createdOkRule = new LastResponseCodeRule();
+                createdOkRule.ComparisonOperator = StringComparisonOperator.Equality;
+                createdOkRule.ResponseCode = WebTestResponseCode.Created;
 
-                // check if the user exists
-                WebTestRequest request1A = new WebTestRequest("http://beta.blahgua.com/v2/users/check/username/" + UserName);
-                request1A.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1A"));
-                request1A.Method = "POST";
-                request1A.Encoding = System.Text.Encoding.GetEncoding("utf-8");
-                StringHttpBody request1ABody = new StringHttpBody();
-                request1ABody.ContentType = "application/json; charset=utf-8";
-                request1ABody.InsertByteOrderMark = false;
-                request1ABody.BodyString = "";
-                request1A.Body = request1ABody;
-                XPathExtractionRule extractionRule1a = new XPathExtractionRule();
-                extractionRule1a.XPathToSearch = "//*[local-name()=\'ok\']";
-                extractionRule1a.Index = 0;
-                extractionRule1a.ExtractRandomMatch = false;
-                extractionRule1a.ContextParameterName = "UserExists";
-                request1A.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule1a.Extract);
-                yield return request1A;
+                this.BeginCondition(createdOkRule);
+                bool didIt = this.ExecuteConditionalRule(createdOkRule);
 
-                // make the conditioner
-                StringComparisonRule conditionalRule2 = new StringComparisonRule();
-                conditionalRule2.ContextParameterName = "UserExists";
-                conditionalRule2.ComparisonOperator = StringComparisonOperator.Equality;
-                conditionalRule2.Value = "false";
-                conditionalRule2.IgnoreCase = true;
-                conditionalRule2.UseRegularExpression = false;
 
-                this.BeginCondition(conditionalRule2);
+                WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
+                request5.Method = "POST";
+                StringHttpBody request5Body = new StringHttpBody();
+                request5Body.ContentType = "application/json; charset=utf-8";
+                request5Body.InsertByteOrderMark = false;
+                request5Body.BodyString = "{\"N\":\"" + UserName + "\", \"pwd\":\"Sheep\"}";
+                request5.Body = request5Body;
+                yield return request5;
+                request5 = null;
 
-                if (this.ExecuteConditionalRule(conditionalRule2))
+                if (didIt)
                 {
-                    WebTestRequest requestA = new WebTestRequest("http://beta.blahgua.com/v2/users");
-                    requestA.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " requestA"));
-                    requestA.Method = "POST";
-                    StringHttpBody requestABody = new StringHttpBody();
-                    requestABody.ContentType = "application/json; charset=utf-8";
-                    requestABody.InsertByteOrderMark = false;
-                    requestABody.BodyString = "{\"N\":\"" + UserName + "\",\"pwd\":\"Sheep\"}";
-                    requestA.Body = requestABody;
-                    yield return requestA;
-                    requestA = null;
-                    LastResponseCodeRule createdOkRule = new LastResponseCodeRule();
-                    createdOkRule.ComparisonOperator = StringComparisonOperator.Equality;
-                    createdOkRule.ResponseCode = WebTestResponseCode.Created;
-
-                    this.BeginCondition(createdOkRule);
-                    bool didIt = this.ExecuteConditionalRule(createdOkRule);
-
-                
-                    WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
-                    request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
-                    request5.Method = "POST";
-                    StringHttpBody request5Body = new StringHttpBody();
-                    request5Body.ContentType = "application/json; charset=utf-8";
-                    request5Body.InsertByteOrderMark = false;
-                    request5Body.BodyString = "{\"N\":\"" + UserName + "\", \"pwd\":\"Sheep\"}";
-                    request5.Body = request5Body;
-                    yield return request5;
-                    request5 = null;
-
-                    if (didIt)
-                    {
-                        WebTestRequest request8c = new WebTestRequest("http://beta.blahgua.com/v2/userGroups");
-                        request8c.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request8c"));
-                        request8c.Method = "POST";
-                        StringHttpBody request8cBody = new StringHttpBody();
-                        request8cBody.ContentType = "application/json; charset=utf-8";
-                        request8cBody.InsertByteOrderMark = false;
-                        request8cBody.BodyString = "{\"G\":\"" + this.Context["DefaultGroup"].ToString() + "\"}";
-                        request8c.Body = request8cBody;
-                        yield return request8c;
-                        request8c = null;
-                        this.Context.Add("UserReady", "true");
-                    }
-                    else
-                        this.Context.Add("UserReady", "true");
-
-                    this.EndCondition(createdOkRule);
-                }
-                else
-                {
-                    WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
-                    request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
-                    request5.Method = "POST";
-                    StringHttpBody request5Body = new StringHttpBody();
-                    request5Body.ContentType = "application/json; charset=utf-8";
-                    request5Body.InsertByteOrderMark = false;
-                    request5Body.BodyString = "{\"N\":\"" + UserName + "\", \"pwd\":\"Sheep\"}";
-                    request5.Body = request5Body;
-                    yield return request5;
-                    request5 = null;
-                    this.Context.Add("UserReady", "true");
+                    WebTestRequest request8c = new WebTestRequest("http://beta.blahgua.com/v2/userGroups");
+                    request8c.ThinkTime = 1;
+                    request8c.Method = "POST";
+                    StringHttpBody request8cBody = new StringHttpBody();
+                    request8cBody.ContentType = "application/json; charset=utf-8";
+                    request8cBody.InsertByteOrderMark = false;
+                    request8cBody.BodyString = "{\"G\":\"" + this.Context["DefaultGroup"].ToString() + "\"}";
+                    request8c.Body = request8cBody;
+                    yield return request8c;
+                    request8c = null;
                 }
 
-                this.EndCondition(conditionalRule2);
-
+                this.EndCondition(createdOkRule);
+            }
+            else
+            {
+                WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
+                request5.Method = "POST";
+                StringHttpBody request5Body = new StringHttpBody();
+                request5Body.ContentType = "application/json; charset=utf-8";
+                request5Body.InsertByteOrderMark = false;
+                request5Body.BodyString = "{\"N\":\"" + UserName + "\", \"pwd\":\"Sheep\"}";
+                request5.Body = request5Body;
+                yield return request5;
+                request5 = null;
             }
 
-            this.EndLoop(loginInRule);
+            this.EndCondition(conditionalRule2);
 
-            
+
 
             WebTestRequest request6 = new WebTestRequest("http://beta.blahgua.com/v2/users/profile/schema");
-            request6.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request6"));
             request6.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             yield return request6;
             request6 = null;
 
             WebTestRequest request7 = new WebTestRequest("http://beta.blahgua.com/v2/users/info");
             request7.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request7.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request7"));
             request7.QueryStringParameters.Add("", "{}", false, false);
             yield return request7;
             request7 = null;
@@ -254,7 +218,6 @@ namespace WebAndLoadTestProject1
 
             WebTestRequest request8 = new WebTestRequest("http://beta.blahgua.com/v2/userGroups");
             request8.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request8.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request8"));
             request8.QueryStringParameters.Add("", "{}", false, false);
             XPathExtractionRule extractionRule3 = new XPathExtractionRule();
             extractionRule3.XPathToSearch = "//*[local-name()=\'item\']/*[local-name()=\'_id\']";
@@ -268,7 +231,6 @@ namespace WebAndLoadTestProject1
 
             WebTestRequest request9 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
             request9.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request9.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request9"));
             request9.QueryStringParameters.Add("start", "0", false, false);
             request9.QueryStringParameters.Add("count", "100", false, false);
             request9.QueryStringParameters.Add("groupId", this.Context["DefaultGroup"].ToString(), false, false);
@@ -278,7 +240,6 @@ namespace WebAndLoadTestProject1
             WebTestRequest request10 = new WebTestRequest(("http://beta.blahgua.com/v2/groups/"
                             + (this.Context["DefaultGroup"].ToString() + "/viewerCount")));
             request10.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-            request10.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request10"));
             yield return request10;
             request10 = null;
 
@@ -293,7 +254,6 @@ namespace WebAndLoadTestProject1
             for (; this.ExecuteConditionalRule(conditionalRule1); )
             {
                 WebTestRequest request11 = new WebTestRequest("http://beta.blahgua.com/v2/blahs");
-                request11.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request11"));
                 request11.Method = "POST";
                 StringHttpBody request11Body = new StringHttpBody();
                 request11Body.ContentType = "application/json; charset=utf-8";
@@ -316,13 +276,12 @@ namespace WebAndLoadTestProject1
 
                 WebTestRequest request12 = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
                 request12.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
-                request12.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request12"));
                 request12.QueryStringParameters.Add("stats", "true", false, false);
                 yield return request12;
                 request12 = null;
 
                 WebTestRequest request13 = new WebTestRequest("http://beta.blahgua.com/v2/users/descriptor");
-                request13.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request13"));
+                request13.ThinkTime = 1;
                 request13.Method = "POST";
                 StringHttpBody request13Body = new StringHttpBody();
                 request13Body.ContentType = "application/json; charset=utf-8";
@@ -336,7 +295,7 @@ namespace WebAndLoadTestProject1
             this.EndLoop(conditionalRule1);
 
             WebTestRequest request14 = new WebTestRequest("http://beta.blahgua.com/v2/users/logout");
-            request14.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request14"));
+            request14.ThinkTime = 1;
             request14.Method = "POST";
             StringHttpBody request14Body = new StringHttpBody();
             request14Body.ContentType = "application/json; charset=utf-8";
