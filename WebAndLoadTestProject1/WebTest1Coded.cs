@@ -8,27 +8,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebAndLoadTestProject1 {
+namespace WebAndLoadTestProject1
+{
     using System;
     using System.Collections.Generic;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.WebTesting;
     using Microsoft.VisualStudio.TestTools.WebTesting.Rules;
-    
-    
-    public class WebTest1Coded : WebTest {
-        
-        public WebTest1Coded() {
+
+
+    public class WebTest1Coded : WebTest
+    {
+
+        public WebTest1Coded()
+        {
             this.PreAuthenticate = true;
         }
-        
-        public override IEnumerator<WebTestRequest> GetRequestEnumerator() {
+
+        public override IEnumerator<WebTestRequest> GetRequestEnumerator()
+        {
             // Initialize validation rules that apply to all requests in the WebTest
-            if ((this.Context.ValidationLevel >= Microsoft.VisualStudio.TestTools.WebTesting.ValidationLevel.Low)) {
+            if ((this.Context.ValidationLevel >= Microsoft.VisualStudio.TestTools.WebTesting.ValidationLevel.Low))
+            {
                 ValidateResponseUrl validationRule1 = new ValidateResponseUrl();
                 this.ValidateResponse += new EventHandler<ValidationEventArgs>(validationRule1.Validate);
             }
-            if ((this.Context.ValidationLevel >= Microsoft.VisualStudio.TestTools.WebTesting.ValidationLevel.Low)) {
+            if ((this.Context.ValidationLevel >= Microsoft.VisualStudio.TestTools.WebTesting.ValidationLevel.Low))
+            {
                 ValidationRuleResponseTimeGoal validationRule2 = new ValidationRuleResponseTimeGoal();
                 validationRule2.Tolerance = 0D;
                 this.ValidateResponseOnPageComplete += new EventHandler<ValidationEventArgs>(validationRule2.Validate);
@@ -93,7 +99,8 @@ namespace WebAndLoadTestProject1 {
             bool advanceDataCursors1 = false;
             this.BeginLoop(conditionalRule1, maxIterations1, advanceDataCursors1);
 
-            for (; this.ExecuteConditionalRule(conditionalRule1); ) {
+            for (; this.ExecuteConditionalRule(conditionalRule1); )
+            {
                 WebTestRequest request7 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
                 request7.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
                 request7.QueryStringParameters.Add("start", "0", false, false);
@@ -105,7 +112,8 @@ namespace WebAndLoadTestProject1 {
 
             this.EndLoop(conditionalRule1);
 
-            WebTestRequest request8 = new WebTestRequest("http://beta.blahgua.com/v2/groups/517879aee4b0a476433fa9b9/viewerCount");
+            WebTestRequest request8 = new WebTestRequest(("http://beta.blahgua.com/v2/groups/"
+                            + (this.Context["curGroupId"].ToString() + "/viewerCount")));
             request8.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             yield return request8;
             request8 = null;
@@ -124,7 +132,8 @@ namespace WebAndLoadTestProject1 {
 
             this.BeginCondition(conditionalRule2);
 
-            if (this.ExecuteConditionalRule(conditionalRule2)) {
+            if (this.ExecuteConditionalRule(conditionalRule2))
+            {
                 WebTestRequest request10 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
                 request10.ThinkTime = 2;
                 request10.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
