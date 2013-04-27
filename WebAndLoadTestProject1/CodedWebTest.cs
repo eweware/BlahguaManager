@@ -176,6 +176,7 @@ namespace WebAndLoadTestProject1
                     requestABody.BodyString = "{\"N\":\"" + UserName + "\",\"pwd\":\"Sheep\"}";
                     requestA.Body = requestABody;
                     yield return requestA;
+                    request1A.IgnoreHttpStatusCode = true;
                     requestA = null;
                     LastResponseCodeRule createdOkRule = new LastResponseCodeRule();
                     createdOkRule.ComparisonOperator = StringComparisonOperator.Equality;
@@ -314,7 +315,7 @@ namespace WebAndLoadTestProject1
                 yield return request11;
                 request11 = null;
 
-                WebTestRequest request12 = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
+                WebTestRequest request12 = new WebTestRequest("http://beta.blahgua.com/v2/blahs/" + (this.Context["DefaultBlahId"].ToString()));
                 request12.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
                 request12.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request12"));
                 request12.QueryStringParameters.Add("stats", "true", false, false);

@@ -46,15 +46,13 @@ namespace WebAndLoadTestProject1
         //---------------------------------------------------------------------
         public override void Extract(object sender, ExtractionEventArgs e)
         {
-               JObject jObj = JObject.Parse(e.Response.BodyString);
-
-              
-              string propertyValue = "";
-              if (propertyValue != null) {
+            JObject jObj = JObject.Parse(e.Response.BodyString);
+            string propertyValue = (string)jObj[Name];
+            if (propertyValue != null) {
                 e.WebTest.Context.Add(ContextParameterName, propertyValue);
                 e.Success = true;
-              } else
-                e.Success = false;
+            } else
+            e.Success = false;
         }
     }
 }
