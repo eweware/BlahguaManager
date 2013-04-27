@@ -52,8 +52,8 @@ namespace WebAndLoadTestProject1
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
             //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            string UserName = "loadtest6_" + counter.ToString();
-            //string UserName = "loadtest5_" + instanceCounter.ToString();
+            //string UserName = "loadtest6_" + counter.ToString();
+            string UserName = "loadtest8_" + instanceCounter.ToString();
 
 
             // Initialize validation rules that apply to all requests in the WebTest
