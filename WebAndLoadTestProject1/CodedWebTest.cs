@@ -174,9 +174,10 @@ namespace WebAndLoadTestProject1
                     requestABody.ContentType = "application/json; charset=utf-8";
                     requestABody.InsertByteOrderMark = false;
                     requestABody.BodyString = "{\"N\":\"" + UserName + "\",\"pwd\":\"Sheep\"}";
+                    //requestA.IgnoreHttpStatusCode = true;
                     requestA.Body = requestABody;
                     yield return requestA;
-                    request1A.IgnoreHttpStatusCode = true;
+
                     requestA = null;
                     LastResponseCodeRule createdOkRule = new LastResponseCodeRule();
                     createdOkRule.ComparisonOperator = StringComparisonOperator.Equality;

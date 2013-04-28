@@ -42,6 +42,14 @@ namespace WebAndLoadTestProject1
             set { NameValue = value; }
         }
 
+        // The name of the desired input field
+        private string KeyValue;
+        public string Key
+        {
+            get { return KeyValue; }
+            set { KeyValue = value; }
+        }
+
         // The Extract method.  The parameter e contains the Web test context.
         //---------------------------------------------------------------------
         public override void Extract(object sender, ExtractionEventArgs e)
@@ -54,5 +62,57 @@ namespace WebAndLoadTestProject1
             } else
             e.Success = false;
         }
+
+        // The Extract method.  The parameter e contains the Web test context.
+        //---------------------------------------------------------------------
+        public void ExtractObject(object sender, ExtractionEventArgs e)
+        {
+            JObject jObj = JObject.Parse(e.Response.BodyString);
+
+            if (jObj != null)
+            {
+                e.WebTest.Context.Add(ContextParameterName, jObj);
+                e.Success = true;
+            }
+            else
+                e.Success = false;
+        }
+
+        // The Extract method.  The parameter e contains the Web test context.
+        //---------------------------------------------------------------------
+        public void ExtractArray(object sender, ExtractionEventArgs e)
+        {
+            JObject jObj = JObject.Parse(e.Response.BodyString);
+
+            if (jObj != null)
+            {
+                e.WebTest.Context.Add(ContextParameterName, jObj);
+                e.Success = true;
+            }
+            else
+                e.Success = false;
+        }
+
+        // The Extract method.  The parameter e contains the Web test context.
+        //---------------------------------------------------------------------
+        public void ExtractKeyedObject(object sender, ExtractionEventArgs e)
+        {
+            JObject jObj = JObject.Parse(e.Response.BodyString);
+
+            foreach (JToken curObj in jObj.Children())
+            {
+            }
+
+
+            if (jObj != null)
+            {
+                e.WebTest.Context.Add(ContextParameterName, jObj);
+                e.Success = true;
+            }
+            else
+                e.Success = false;
+        }
+
+        
     }
 }

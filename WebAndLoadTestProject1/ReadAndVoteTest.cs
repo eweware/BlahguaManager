@@ -18,6 +18,7 @@ namespace WebAndLoadTestProject1
     using WebTest.WebService.Plugin.Runtime;
     using Newtonsoft.Json;
     using System.Collections;
+    using Newtonsoft.Json.Linq;
 
 
     public class ReadAndVoteTest : WebTest
@@ -123,12 +124,11 @@ namespace WebAndLoadTestProject1
             request1ABody.InsertByteOrderMark = false;
             request1ABody.BodyString = "";
             request1A.Body = request1ABody;
-            XPathExtractionRule extractionRule1a = new XPathExtractionRule();
-            extractionRule1a.XPathToSearch = "//*[local-name()=\'ok\']";
-            extractionRule1a.Index = 0;
-            extractionRule1a.ExtractRandomMatch = false;
-            extractionRule1a.ContextParameterName = "UserExists";
-            request1A.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule1a.Extract);
+            JsonExtractor userExistsRule = new JsonExtractor();
+            userExistsRule.ContextParameterName = "UserExists";
+            userExistsRule.Name = "ok";
+            request1A.ExtractValues += new EventHandler<ExtractionEventArgs>(userExistsRule.Extract);
+
             yield return request1A;
 
             // make the conditioner
