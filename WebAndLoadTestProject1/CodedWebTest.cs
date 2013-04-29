@@ -74,16 +74,15 @@ namespace WebAndLoadTestProject1
 
 
             WebTestRequest request1Dependent1 = new WebTestRequest("http://beta.blahgua.com/v2/groups/featured");
-            request1Dependent1.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent1.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent1"));
-
+            request1Dependent1.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent1.QueryStringParameters.Add("", "{}", false, false);
-            XPathExtractionRule extractionRule1 = new XPathExtractionRule();
-            extractionRule1.XPathToSearch = "//*[local-name()=\'item\']/*[local-name()=\'_id\']";
-            extractionRule1.Index = 0;
-            extractionRule1.ExtractRandomMatch = false;
-            extractionRule1.ContextParameterName = "DefaultGroup";
-            request1Dependent1.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule1.Extract);
+            JsonExtractor groupExtractor = new JsonExtractor();
+            groupExtractor.ContextParameterName = "DefaultGroup";
+            groupExtractor.Key = "N";
+            groupExtractor.KeyTest = "The Now Network";
+            groupExtractor.Name = "_id";
+            request1Dependent1.ExtractValues += new EventHandler<ExtractionEventArgs>(groupExtractor.ExtractKeyedObject);
             yield return request1Dependent1;
             request1Dependent1 = null;
 
@@ -91,13 +90,12 @@ namespace WebAndLoadTestProject1
             request1Dependent2.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent2"));
             request1Dependent2.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent2.QueryStringParameters.Add("", "{}", false, false);
-            XPathExtractionRule extractionRule2 = new XPathExtractionRule();
-            extractionRule2.XPathToSearch = "//*[local-name()=\'item\'][2]/*[local-name()=\'_id\']";
-            extractionRule2.Index = 0;
-            extractionRule2.ExtractRandomMatch = false;
-            extractionRule2.ContextParameterName = "SayBlahType";
-            request1Dependent2.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule2.Extract);
-
+            JsonExtractor sayExtractor = new JsonExtractor();
+            sayExtractor.ContextParameterName = "SayBlahType";
+            sayExtractor.Key = "N";
+            sayExtractor.KeyTest = "says";
+            sayExtractor.Name = "_id";
+            request1Dependent2.ExtractValues += new EventHandler<ExtractionEventArgs>(sayExtractor.ExtractKeyedObject);
             yield return request1Dependent2;
             request1Dependent2 = null;
 
@@ -262,7 +260,7 @@ namespace WebAndLoadTestProject1
             extractionRule3.XPathToSearch = "//*[local-name()=\'item\']/*[local-name()=\'_id\']";
             extractionRule3.Index = 0;
             extractionRule3.ExtractRandomMatch = false;
-            extractionRule3.ContextParameterName = "DefautGroup";
+            extractionRule3.ContextParameterName = "DefaultGroup";
             request8.ExtractValues += new EventHandler<ExtractionEventArgs>(extractionRule3.Extract);
             yield return request8;
             request8 = null;
@@ -286,7 +284,7 @@ namespace WebAndLoadTestProject1
 
             CountingLoopRule conditionalRule1 = new CountingLoopRule();
             conditionalRule1.ContextParameterName = "CreateCount";
-            conditionalRule1.IterationsCount = 10D;
+            conditionalRule1.IterationsCount = 1D;
 
             int maxIterations1 = -1;
             bool advanceDataCursors1 = false;
