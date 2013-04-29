@@ -35,6 +35,8 @@ namespace WebAndLoadTestProject1
         public CodedWebTest()
         {
             counter++;
+            if (counter > 100)
+                counter = 0;
             this.Context.Add("DefaultGroup", "");
             this.Context.Add("SayBlahType", "");
             this.Context.Add("DefaultBlahId", "");
@@ -52,8 +54,8 @@ namespace WebAndLoadTestProject1
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
             //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            //string UserName = "loadtest6_" + counter.ToString();
-            string UserName = "loadtest8_" + instanceCounter.ToString();
+            string UserName = "writer2_" + counter.ToString();
+            //string UserName = "writer1_" + instanceCounter.ToString();
 
 
             // Initialize validation rules that apply to all requests in the WebTest

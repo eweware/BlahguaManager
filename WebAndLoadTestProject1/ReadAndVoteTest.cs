@@ -34,6 +34,8 @@ namespace WebAndLoadTestProject1
         public ReadAndVoteTest()
         {
             counter++;
+            if (counter > 100)
+                counter = 0;
             this.Context.Add("DefaultGroup", "");
             this.Context.Add("SayBlahType", "");
             this.Context.Add("DefaultBlahId", "");
@@ -52,8 +54,8 @@ namespace WebAndLoadTestProject1
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
             //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            //string UserName = "loadtest6_" + counter.ToString();
-            string UserName = "loadtest8_" + instanceCounter.ToString();
+            string UserName = "reader2_" + counter.ToString();
+            //string UserName = "reader1_" + instanceCounter.ToString();
 
 
             // Initialize validation rules that apply to all requests in the WebTest
@@ -280,17 +282,7 @@ namespace WebAndLoadTestProject1
                 request12 = null;
 
                 JObject curObject = (JObject)this.Context["CurrentBlah"];
-                WebTestRequest request13 = new WebTestRequest("http://beta.blahgua.com/v2/users/descriptor");
-                request13.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request13"));
-                request13.ThinkTime = 1;
-                request13.Method = "POST";
-                StringHttpBody request13Body = new StringHttpBody();
-                request13Body.ContentType = "application/json; charset=utf-8";
-                request13Body.InsertByteOrderMark = false;
-                request13Body.BodyString = "{}";
-                request13.Body = request13Body;
-                yield return request13;
-                request13 = null;
+
 
                 // add a view and an open
                 WebTestRequest viewOpenRequest = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
