@@ -28,15 +28,14 @@ namespace WebAndLoadTestProject1
         static string rndCounter = DateTime.Now.Ticks.ToString();
         string headerTestName = "Visual_Studio; Coded_Web_Test;";
         static int instanceCounter = rndBase.Next(1000);
+        static readonly object LockObject = new object();
         
 
         private WebServicePlugin testPlugin0 = new WebServicePlugin();
 
         public CodedWebTest()
         {
-            counter++;
-            if (counter > 100)
-                counter = 0;
+
             this.Context.Add("DefaultGroup", "");
             this.Context.Add("SayBlahType", "");
             this.Context.Add("DefaultBlahId", "");
@@ -53,9 +52,15 @@ namespace WebAndLoadTestProject1
 
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
-            //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            string UserName = "writer4_" + counter.ToString();
-            //string UserName = "writer1_" + instanceCounter.ToString();
+            string UserName;
+            lock (LockObject)
+            {
+                counter++;
+                if (counter > 100)
+                    counter = 0;
+                UserName = "writer6_" + counter.ToString();
+            }
+           
 
 
             // Initialize validation rules that apply to all requests in the WebTest
@@ -141,6 +146,7 @@ namespace WebAndLoadTestProject1
                 WebTestRequest request1A = new WebTestRequest("https://beta.blahgua.com/v2/users/check/username/" + UserName);
                 request1A.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1A"));
                 request1A.Method = "POST";
+                request1A.ThinkTime = 1;
                 request1A.Encoding = System.Text.Encoding.GetEncoding("utf-8");
                 StringHttpBody request1ABody = new StringHttpBody();
                 request1ABody.ContentType = "application/json; charset=utf-8";
@@ -169,6 +175,7 @@ namespace WebAndLoadTestProject1
                 {
                     WebTestRequest requestA = new WebTestRequest("https://beta.blahgua.com/v2/users");
                     requestA.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " requestA"));
+                    requestA.ThinkTime = 1;
                     requestA.Method = "POST";
                     StringHttpBody requestABody = new StringHttpBody();
                     requestABody.ContentType = "application/json; charset=utf-8";
@@ -190,6 +197,7 @@ namespace WebAndLoadTestProject1
                     WebTestRequest request5 = new WebTestRequest("https://beta.blahgua.com/v2/users/login");
                     request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
                     request5.Method = "POST";
+                    request5.ThinkTime = 1;
                     StringHttpBody request5Body = new StringHttpBody();
                     request5Body.ContentType = "application/json; charset=utf-8";
                     request5Body.InsertByteOrderMark = false;
@@ -201,6 +209,7 @@ namespace WebAndLoadTestProject1
                     if (didIt)
                     {
                         WebTestRequest request8c = new WebTestRequest("https://beta.blahgua.com/v2/userGroups");
+                        request8c.ThinkTime = 1;
                         request8c.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request8c"));
                         request8c.Headers.Add(new WebTestRequestHeader("Accept", "application/json, text/javascript, */*; q=0.01"));
                         request8c.Headers.Add(new WebTestRequestHeader("X-Requested-With", "XMLHttpRequest"));
@@ -225,6 +234,7 @@ namespace WebAndLoadTestProject1
                     WebTestRequest request5 = new WebTestRequest("https://beta.blahgua.com/v2/users/login");
                     request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
                     request5.Method = "POST";
+                    request5.ThinkTime = 1;
                     StringHttpBody request5Body = new StringHttpBody();
                     request5Body.ContentType = "application/json; charset=utf-8";
                     request5Body.InsertByteOrderMark = false;
