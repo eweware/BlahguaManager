@@ -54,7 +54,7 @@ namespace WebAndLoadTestProject1
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
             //string UserName = "loadtest2_" + rndCounter + "_" + counter.ToString();
-            string UserName = "reader2_" + counter.ToString();
+            string UserName = "reader4_" + counter.ToString();
             //string UserName = "reader1_" + instanceCounter.ToString();
 
 
@@ -75,20 +75,20 @@ namespace WebAndLoadTestProject1
             this.PostRequest += new EventHandler<PostRequestEventArgs>(this.testPlugin0.PostRequest);
 
 
-            WebTestRequest request1Dependent1 = new WebTestRequest("http://beta.blahgua.com/v2/groups/featured");
+            WebTestRequest request1Dependent1 = new WebTestRequest("https://beta.blahgua.com/v2/groups/featured");
             request1Dependent1.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent1"));
             request1Dependent1.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent1.QueryStringParameters.Add("", "{}", false, false);
             JsonExtractor groupExtractor = new JsonExtractor();
             groupExtractor.ContextParameterName = "DefaultGroup";
             groupExtractor.Key = "N";
-            groupExtractor.KeyTest = "The Now Network";
+            groupExtractor.KeyTest = "General Discussion";
             groupExtractor.Name = "_id";
             request1Dependent1.ExtractValues += new EventHandler<ExtractionEventArgs>(groupExtractor.ExtractKeyedObject);
             yield return request1Dependent1;
             request1Dependent1 = null;
 
-            WebTestRequest request1Dependent2 = new WebTestRequest("http://beta.blahgua.com/v2/blahs/types");
+            WebTestRequest request1Dependent2 = new WebTestRequest("https://beta.blahgua.com/v2/blahs/types");
             request1Dependent2.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request1Dependent2.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1Dependent2"));
             request1Dependent2.QueryStringParameters.Add("", "{}", false, false);
@@ -101,7 +101,7 @@ namespace WebAndLoadTestProject1
             yield return request1Dependent2;
             request1Dependent2 = null;
 
-            WebTestRequest request2 = new WebTestRequest("http://beta.blahgua.com/v2/users/inbox");
+            WebTestRequest request2 = new WebTestRequest("https://beta.blahgua.com/v2/users/inbox");
             request2.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request2.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request2"));
             request2.QueryStringParameters.Add("start", "0", false, false);
@@ -114,7 +114,7 @@ namespace WebAndLoadTestProject1
             yield return request2;
             request2 = null;
 
-            WebTestRequest request3 = new WebTestRequest(("http://beta.blahgua.com/v2/groups/"
+            WebTestRequest request3 = new WebTestRequest(("https://beta.blahgua.com/v2/groups/"
                             + (this.Context["DefaultGroup"].ToString() + "/viewerCount")));
             request3.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request3.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request3"));
@@ -123,7 +123,7 @@ namespace WebAndLoadTestProject1
 
 
             // check if the user exists
-            WebTestRequest request1A = new WebTestRequest("http://beta.blahgua.com/v2/users/check/username/" + UserName);
+            WebTestRequest request1A = new WebTestRequest("https://beta.blahgua.com/v2/users/check/username/" + UserName);
             request1A.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request1A"));
             request1A.Method = "POST";
             request1A.Encoding = System.Text.Encoding.GetEncoding("utf-8");
@@ -154,7 +154,7 @@ namespace WebAndLoadTestProject1
 
             if (this.ExecuteConditionalRule(conditionalRule2))
             {
-                WebTestRequest requestA = new WebTestRequest("http://beta.blahgua.com/v2/users");
+                WebTestRequest requestA = new WebTestRequest("https://beta.blahgua.com/v2/users");
                 requestA.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " requestA"));
                 requestA.ThinkTime = 1;
                 requestA.Method = "POST";
@@ -173,7 +173,7 @@ namespace WebAndLoadTestProject1
                 bool didIt = this.ExecuteConditionalRule(createdOkRule);
 
 
-                WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
+                WebTestRequest request5 = new WebTestRequest("https://beta.blahgua.com/v2/users/login");
                 request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
                 request5.Method = "POST";
                 StringHttpBody request5Body = new StringHttpBody();
@@ -188,7 +188,7 @@ namespace WebAndLoadTestProject1
 
                 if (didIt)
                 {
-                    WebTestRequest request8c = new WebTestRequest("http://beta.blahgua.com/v2/userGroups");
+                    WebTestRequest request8c = new WebTestRequest("https://beta.blahgua.com/v2/userGroups");
                     request8c.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request8c"));
                     request8c.ThinkTime = 1;
                     request8c.Method = "POST";
@@ -205,7 +205,7 @@ namespace WebAndLoadTestProject1
             }
             else
             {
-                WebTestRequest request5 = new WebTestRequest("http://beta.blahgua.com/v2/users/login");
+                WebTestRequest request5 = new WebTestRequest("https://beta.blahgua.com/v2/users/login");
                 request5.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request5"));
                 request5.Method = "POST";
                 StringHttpBody request5Body = new StringHttpBody();
@@ -221,13 +221,13 @@ namespace WebAndLoadTestProject1
 
 
 
-            WebTestRequest request6 = new WebTestRequest("http://beta.blahgua.com/v2/users/profile/schema");
+            WebTestRequest request6 = new WebTestRequest("https://beta.blahgua.com/v2/users/profile/schema");
             request6.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request6"));
             request6.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             yield return request6;
             request6 = null;
 
-            WebTestRequest request7 = new WebTestRequest("http://beta.blahgua.com/v2/users/info");
+            WebTestRequest request7 = new WebTestRequest("https://beta.blahgua.com/v2/users/info");
             request7.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request7"));
             request7.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request7.QueryStringParameters.Add("", "{}", false, false);
@@ -236,7 +236,7 @@ namespace WebAndLoadTestProject1
             request7 = null;
 
 
-            WebTestRequest request8 = new WebTestRequest("http://beta.blahgua.com/v2/userGroups");
+            WebTestRequest request8 = new WebTestRequest("https://beta.blahgua.com/v2/userGroups");
             request8.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request8"));
             request8.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request8.QueryStringParameters.Add("", "{}", false, false);
@@ -250,7 +250,7 @@ namespace WebAndLoadTestProject1
             request8 = null;
 
 
-            WebTestRequest request10 = new WebTestRequest(("http://beta.blahgua.com/v2/groups/"
+            WebTestRequest request10 = new WebTestRequest(("https://beta.blahgua.com/v2/groups/"
                             + (this.Context["DefaultGroup"].ToString() + "/viewerCount")));
             request10.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
             request10.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request10"));
@@ -271,7 +271,7 @@ namespace WebAndLoadTestProject1
                 string curBlahID = (string)((JArray)this.Context["BlahList"])[curIndex-1]["I"];
                 this.Context["DefaultBlahId"] = curBlahID;
 
-                WebTestRequest request12 = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
+                WebTestRequest request12 = new WebTestRequest(("https://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
                 request12.Headers.Add(new WebTestRequestHeader("Content-Type", "application/json; charset=utf-8"));
                 request12.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request12"));
                 request12.QueryStringParameters.Add("stats", "true", false, false);
@@ -285,7 +285,7 @@ namespace WebAndLoadTestProject1
 
 
                 // add a view and an open
-                WebTestRequest viewOpenRequest = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
+                WebTestRequest viewOpenRequest = new WebTestRequest(("https://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
                 viewOpenRequest.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " viewOpenRequest"));
                 viewOpenRequest.Method = "PUT";
                 StringHttpBody viewOpenBody = new StringHttpBody();
@@ -316,7 +316,7 @@ namespace WebAndLoadTestProject1
                         else
                             bodyString = "{\"D\":1}";
 
-                        WebTestRequest promoteDemoteRequest = new WebTestRequest(("http://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
+                        WebTestRequest promoteDemoteRequest = new WebTestRequest(("https://beta.blahgua.com/v2/blahs/" + this.Context["DefaultBlahId"].ToString()));
                         promoteDemoteRequest.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " promoteDemoteRequest"));
                         promoteDemoteRequest.Method = "PUT";
                         StringHttpBody promoteBody = new StringHttpBody();
@@ -333,7 +333,7 @@ namespace WebAndLoadTestProject1
 
             this.EndLoop(conditionalRule1);
 
-            WebTestRequest request14 = new WebTestRequest("http://beta.blahgua.com/v2/users/logout");
+            WebTestRequest request14 = new WebTestRequest("https://beta.blahgua.com/v2/users/logout");
             request14.Headers.Add(new WebTestRequestHeader("JEWS", headerTestName + " request14"));
             request14.ThinkTime = 1;
             request14.Method = "POST";

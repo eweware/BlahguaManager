@@ -99,6 +99,7 @@ namespace BlahguaManager
             UriBuilder builder = new UriBuilder();
             builder.Host = serverURL;
             builder.Path = path;
+            builder.Scheme = "https"; 
 
             builder.Query = query;
             Uri result = builder.Uri;
@@ -621,7 +622,7 @@ namespace BlahguaManager
                 nvc.Add("primary", "true");
                 nvc.Add("objectId", blahId);
 
-                HttpUploadFile("http://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
+                HttpUploadFile("https://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
                 return true;
             }
             else 

@@ -82,7 +82,7 @@ namespace BlahguaManager
 
             var connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0}; Extended Properties=Excel 12.0;", path);
 
-            var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$] WHERE CHANNEL IS NOT NULL", connectionString);
+            var adapter = new OleDbDataAdapter("SELECT * FROM [Blahs$] WHERE CHANNEL IS NOT NULL", connectionString);
             var ds = new DataSet();
 
             adapter.Fill(ds, "anyNameHere");
