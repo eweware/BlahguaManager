@@ -56,7 +56,7 @@ namespace BlahguaManager
 
         public string GetData(int dataIndex)
         {
-            return _dataRow[8 + dataIndex].ToString();
+            return _dataRow[10 + dataIndex].ToString();
         }
 
         public string ImportBlah()

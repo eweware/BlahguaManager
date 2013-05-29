@@ -61,7 +61,7 @@
     <Compile Include="CodedWebTest.cs" />
     <Compile Include="ReadAndVoteTest.cs" />
     <Compile Include="ReadVoteCommentTest.cs" />
-    <Compile Include="WebTest1Coded.cs" />
+    <Compile Include="testcode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LoadTest1.loadtest">
@@ -72,9 +72,6 @@
     </None>
     <None Include="packages.config" />
     <None Include="WebTest1.webtest">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="WebTest2.webtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
