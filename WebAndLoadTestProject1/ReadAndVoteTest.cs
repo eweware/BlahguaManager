@@ -34,8 +34,6 @@ namespace WebAndLoadTestProject1
         public ReadAndVoteTest()
         {
             counter++;
-            if (counter > 100)
-                counter = 0;
             this.Context.Add("DefaultGroup", "");
             this.Context.Add("SayBlahType", "");
             this.Context.Add("DefaultBlahId", "");
