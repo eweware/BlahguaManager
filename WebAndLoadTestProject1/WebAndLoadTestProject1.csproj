@@ -60,17 +60,16 @@
     <Compile Include="InvolvedUserProfile.cs" />
     <Compile Include="JsonExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CodedWebTest.cs" />
+    <Compile Include="WriteOneBlah.cs" />
     <Compile Include="ReadAndVoteTest.cs" />
     <Compile Include="ReadVoteCommentTest.cs" />
     <Compile Include="SkimmerUserProfile.cs" />
-    <Compile Include="WriteOneBlah.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LoadTest1.loadtest">
+    <None Include="BasicReadWrite.loadtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="LoadTest2.loadtest">
+    <None Include="LoadTest3.loadtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
