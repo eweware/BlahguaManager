@@ -80,7 +80,8 @@ namespace BlahguaManager
 
         // helper functions
         // RESTful helping methods // ec2-50-17-23-5.compute-1.amazonaws.com
-        public static string serverURL = @"beta.blahgua.com"; // production
+        //public static string serverURL = @"beta.blahgua.com"; // production
+        public static string serverURL = @"qa.rest.blahgua.com"; // production
 
         private string subURL = "v2";
         private bool _usingDefaultUser = true;
@@ -99,7 +100,9 @@ namespace BlahguaManager
             UriBuilder builder = new UriBuilder();
             builder.Host = serverURL;
             builder.Path = path;
-            builder.Scheme = "https"; 
+            //builder.Scheme = "https"; 
+            builder.Scheme = "http";
+            builder.Port = 8080;
 
             builder.Query = query;
             Uri result = builder.Uri;
@@ -330,6 +333,15 @@ namespace BlahguaManager
 
             return PostDataToService(commandURI, paramStr);
         }
+
+        public string UpdateUserProfile(string paramStr)
+        {
+            string profileStr = CreateRESTBaseURL("users/profile/info");
+
+            Uri commandURL = CreateURIfromBaseURL(profileStr);
+            return PutDataToService(commandURL, paramStr);
+        }
+
 
 
 

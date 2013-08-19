@@ -299,7 +299,7 @@ namespace WebAndLoadTestProject1
 
             CountingLoopRule conditionalRule1 = new CountingLoopRule();
             conditionalRule1.ContextParameterName = "CreateCount";
-            conditionalRule1.IterationsCount = 1D;
+            conditionalRule1.IterationsCount = 5D;
 
             int maxIterations1 = -1;
             bool advanceDataCursors1 = false;

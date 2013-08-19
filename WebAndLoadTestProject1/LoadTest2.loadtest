@@ -5,8 +5,8 @@
       <ThinkProfile Value="0.2" Pattern="NormalDistribution" />
       <LoadProfile Pattern="Step" InitialUsers="10" MaxUsers="200" StepUsers="10" StepDuration="10" StepRampTime="0" />
       <TestMix>
-        <TestProfile Name="CodedWebTest" Path="bin\debug\webandloadtestproject1.dll" Id="a6bcd95d-967c-6e23-30f5-3419e65b3ec0" Percentage="10" Type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-        <TestProfile Name="ReadAndVoteTest" Path="bin\debug\webandloadtestproject1.dll" Id="fdc71217-5a23-4170-77c4-d651e835d28f" Percentage="90" Type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+        <TestProfile Name="CodedWebTest" Path="bin\debug\webandloadtestproject1.dll" Id="a6bcd95d-967c-6e23-30f5-3419e65b3ec0" Percentage="50" Type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+        <TestProfile Name="ReadAndVoteTest" Path="bin\debug\webandloadtestproject1.dll" Id="fdc71217-5a23-4170-77c4-d651e835d28f" Percentage="50" Type="Microsoft.VisualStudio.TestTools.WebStress.CodedWebTestElement, Microsoft.VisualStudio.QualityTools.LoadTest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
       </TestMix>
       <BrowserMix>
         <BrowserProfile Percentage="100">

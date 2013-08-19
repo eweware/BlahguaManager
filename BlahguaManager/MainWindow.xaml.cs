@@ -30,6 +30,8 @@ namespace BlahguaManager
         string CurrentFileName;
         DispatcherTimer dispatcherTimer;
         int curBlah;
+        int curPerson;
+        bool isImportingBlahs;
 
         public MainWindow()
         {
@@ -69,13 +71,11 @@ namespace BlahguaManager
         public void DoImportExcel(string fileName)
         {
             CurrentFileName = fileName;
-            DataTable newTable = GetDataTableFromExcel(fileName);
-            newTable.Columns.Add("Status");
-            BlahDataTable.DataContext = newTable;
-            BlahDataTable.ItemsSource = newTable.DefaultView;
+            GetDataTableFromExcel(fileName);
+            
         }
 
-        static DataTable GetDataTableFromExcel(string path)
+        public void GetDataTableFromExcel(string path)
         {
             string pathOnly = System.IO.Path.GetDirectoryName(path);
             string fileName = System.IO.Path.GetFileName(path);
@@ -85,11 +85,25 @@ namespace BlahguaManager
             var adapter = new OleDbDataAdapter("SELECT * FROM [Blahs$] WHERE CHANNEL IS NOT NULL", connectionString);
             var ds = new DataSet();
 
-            adapter.Fill(ds, "anyNameHere");
+            adapter.Fill(ds, "blahTable");
 
-            DataTable data = ds.Tables["anyNameHere"];
+            DataTable newTable = ds.Tables["blahTable"];
+            newTable.Columns.Add("Status");
+            BlahDataTable.DataContext = newTable;
+            BlahDataTable.ItemsSource = newTable.DefaultView;
+            adapter.Dispose();
 
-            return data;
+            var personaAdapter = new OleDbDataAdapter("SELECT * FROM [Personas$] Where USERNAME IS NOT NULL", connectionString);
+
+            var personads = new DataSet();
+
+            personaAdapter.Fill(personads, "personaTable");
+
+            DataTable personTable = personads.Tables["personaTable"];
+            personTable.Columns.Add("Status");
+            PersonaDataTable.DataContext = personTable;
+            PersonaDataTable.ItemsSource = personTable.DefaultView;
+            personaAdapter.Dispose();
         }
 
         static DataTable GetDataTableFromCsv(string path, bool isFirstRowHeader)
@@ -131,52 +145,91 @@ namespace BlahguaManager
 
        private void DoImportBlahs(object sender, RoutedEventArgs e)
        {
+           isImportingBlahs = true;
            curBlah = 0;
            ImportProgress.Maximum = ((DataTable)BlahDataTable.DataContext).Rows.Count;
            App.Blahgua.StartLogFile();
            dispatcherTimer.Start();
        }
 
+       private void DoImportPersonas(object sender, RoutedEventArgs e)
+       {
+           isImportingBlahs = false;
+           curPerson = 0;
+           ImportProgress.Maximum = ((DataTable)PersonaDataTable.DataContext).Rows.Count;
+           App.Blahgua.StartLogFile();
+           dispatcherTimer.Start();
+       }
+
        private void dispatcherTimer_Tick(object sender, EventArgs e)
        {
-            DataTable theTable = (DataTable)BlahDataTable.DataContext;
-            dispatcherTimer.Stop();
-
-            if (theTable != null) 
-            {
-                
-                string resultStr;
-
-                DataRow curRow = theTable.Rows[curBlah];
-                BlahImportItem curItem = new BlahImportItem(curRow);
-
-                resultStr = curItem.ImportBlah();
-                if (resultStr == "ok")
-                {
-                        
-                    //GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Green);
-
-                }
-                else
-                {
-                        
-                    //GetRow(BlahDataTable, i).Background = new SolidColorBrush(Colors.Red);
-                }
-                
-                curBlah++;
-                curRow["status"] = resultStr; 
-                ImportProgress.Value = curBlah;
-                if (curBlah >= theTable.Rows.Count)
-                {
-                    dispatcherTimer.Stop();
-                    App.Blahgua.StopLogFile();
-                }
-                else
-                    dispatcherTimer.Start();
-
-            }
+           if (isImportingBlahs)
+               HandleBlahTick();
+           else
+               HandlePersonaTick();
 
         }
+
+       private void HandleBlahTick()
+       {
+           DataTable theTable = (DataTable)BlahDataTable.DataContext;
+           dispatcherTimer.Stop();
+
+           if (theTable != null)
+           {
+
+               string resultStr;
+
+               DataRow curRow = theTable.Rows[curBlah];
+               BlahImportItem curItem = new BlahImportItem(curRow);
+
+               resultStr = curItem.ImportBlah();
+
+               curBlah++;
+               curRow["status"] = resultStr;
+               ImportProgress.Value = curBlah;
+               if (curBlah >= theTable.Rows.Count)
+               {
+                   dispatcherTimer.Stop();
+                   App.Blahgua.StopLogFile();
+               }
+               else
+                   dispatcherTimer.Start();
+
+           }
+
+       }
+
+       private void HandlePersonaTick()
+       {
+           DataTable theTable = (DataTable)PersonaDataTable.DataContext;
+           dispatcherTimer.Stop();
+
+           if (theTable != null)
+           {
+
+               string resultStr;
+
+               DataRow curRow = theTable.Rows[curPerson];
+               ProfileImportItem curItem = new ProfileImportItem(curRow);
+
+               resultStr = curItem.ImportProfile();
+
+
+               curPerson++;
+               curRow["status"] = resultStr;
+               ImportProgress.Value = curPerson;
+               if (curPerson >= theTable.Rows.Count)
+               {
+                   dispatcherTimer.Stop();
+                   App.Blahgua.StopLogFile();
+               }
+               else
+                   dispatcherTimer.Start();
+
+           }
+
+       }
 
        
 
