@@ -32,6 +32,7 @@ namespace BlahguaManager
         int curBlah;
         int curPerson;
         bool isImportingBlahs;
+       
 
         public MainWindow()
         {
@@ -60,6 +61,23 @@ namespace BlahguaManager
             }
         }
 
+        private void DoSelectFolder(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                // Open document
+                string fileName = dlg.FileName;
+                string pathOnly = System.IO.Path.GetDirectoryName(fileName);
+                FolderNameBox.Text = pathOnly;
+                App.Blahgua.DefaultFolderPath = pathOnly;
+            }
+        }
+
         public void DoImportCSV(string fileName) {           
            // DataTable newTable = Convert(fileName, ",");
             DataTable newTable = GetDataTableFromCsv(fileName, true);
@@ -77,33 +95,65 @@ namespace BlahguaManager
 
         public void GetDataTableFromExcel(string path)
         {
+            ImportBlahsBtn.IsEnabled = false;
+            ImportPersonasBtn.IsEnabled = false;
             string pathOnly = System.IO.Path.GetDirectoryName(path);
             string fileName = System.IO.Path.GetFileName(path);
 
-            var connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0}; Extended Properties=Excel 12.0;", path);
+            string connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0}; Extended Properties=Excel 12.0;", path);
 
-            var adapter = new OleDbDataAdapter("SELECT * FROM [Blahs$] WHERE CHANNEL IS NOT NULL", connectionString);
-            var ds = new DataSet();
+            OleDbDataAdapter adapter = null;
+            try
+            {
+                adapter = new OleDbDataAdapter("SELECT * FROM [Blahs$] WHERE CHANNEL IS NOT NULL", connectionString);
+                DataSet ds = new DataSet();
 
-            adapter.Fill(ds, "blahTable");
+                adapter.Fill(ds, "blahTable");
 
-            DataTable newTable = ds.Tables["blahTable"];
-            newTable.Columns.Add("Status");
-            BlahDataTable.DataContext = newTable;
-            BlahDataTable.ItemsSource = newTable.DefaultView;
-            adapter.Dispose();
+                DataTable newTable = ds.Tables["blahTable"];
+                newTable.Columns.Add("Status");
+                BlahDataTable.DataContext = newTable;
+                BlahDataTable.ItemsSource = newTable.DefaultView;
+                ImportBlahsBtn.IsEnabled = true;
 
-            var personaAdapter = new OleDbDataAdapter("SELECT * FROM [Personas$] Where USERNAME IS NOT NULL", connectionString);
+            }
+            catch (OleDbException exp)
+            {
+                // no blahs loaded
+            }
+            finally
+            {
+                if (adapter != null)
+                    adapter.Dispose();
+            }
 
-            var personads = new DataSet();
+            OleDbDataAdapter personaAdapter = null;
+            try
+            {
+                personaAdapter = new OleDbDataAdapter("SELECT * FROM [Personas$] Where USERNAME IS NOT NULL", connectionString);
 
-            personaAdapter.Fill(personads, "personaTable");
+                DataSet personads = new DataSet();
 
-            DataTable personTable = personads.Tables["personaTable"];
-            personTable.Columns.Add("Status");
-            PersonaDataTable.DataContext = personTable;
-            PersonaDataTable.ItemsSource = personTable.DefaultView;
-            personaAdapter.Dispose();
+                personaAdapter.Fill(personads, "personaTable");
+
+                DataTable personTable = personads.Tables["personaTable"];
+                personTable.Columns.Add("Status");
+                PersonaDataTable.DataContext = personTable;
+                PersonaDataTable.ItemsSource = personTable.DefaultView;
+                ImportPersonasBtn.IsEnabled = true;
+            }
+            catch (OleDbException exp)
+            {
+                // no personas loaded
+                PersonaDataTable.DataContext = null;
+                PersonaDataTable.ItemsSource = null;
+                
+            }
+            finally
+            {
+                if (personaAdapter != null)
+                    personaAdapter.Dispose();
+            }
         }
 
         static DataTable GetDataTableFromCsv(string path, bool isFirstRowHeader)
@@ -229,6 +279,12 @@ namespace BlahguaManager
 
            }
 
+       }
+
+
+       private void UploadServerChanged(object sender, SelectionChangedEventArgs e)
+       {
+           App.Blahgua.ImportToQA = (((ComboBoxItem)e.AddedItems[0]).Name == "UseQA");
        }
 
        

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BlahguaManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -15,15 +15,30 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Blue" Foreground="White" FontSize="18">Blahgua Importer</TextBlock>
-        <Label  Margin="4" Content="CSV File" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Blue" Foreground="White" FontSize="18">Blahgua Importer</TextBlock>
+        
+        <Label Grid.Row="0" Grid.Column="2" Content="Image Folder"></Label>
+        <TextBox x:Name="FolderNameBox" Margin="4" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="filename" VerticalAlignment="Top"/>
+        <Button  Margin="4" Grid.Row="0" Grid.Column="5"  Content="Select Folder" Click="DoSelectFolder"/>
+        
+        <Label  Margin="4" Content="Excel File" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"/>
         <TextBox x:Name="FileNameBox" Margin="4" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="filename" VerticalAlignment="Top"/>
         <Button  Margin="4" Grid.Row="1" Grid.Column="2"  Content="Select File" Click="DoSelectFile"/>
-        <Button  Margin="4" Grid.Row="1" Grid.Column="3"  Content="Import Blahs" Click="DoImportBlahs" />
-        <Button  Margin="4" Grid.Row="1" Grid.Column="4"  Content="Import Personas" Click="DoImportPersonas" />
-        <ProgressBar x:Name="ImportProgress" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Height="10" />
-        <TabControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3">
+            <Label Margin="4" Content="Upload to:"></Label>
+            <ComboBox Margin="4"  SelectionChanged="UploadServerChanged" >
+                <ComboBoxItem Name="UseQA" IsSelected="True">QA server</ComboBoxItem>
+                <ComboBoxItem Name="UserProd">PROD server</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+       
+
+        <Button  x:Name="ImportBlahsBtn" Margin="4" Grid.Row="1" Grid.Column="4"  Content="Import Blahs" Click="DoImportBlahs" />
+        <Button  x:Name="ImportPersonasBtn" Margin="4" Grid.Row="1" Grid.Column="5"  Content="Import Personas" Click="DoImportPersonas" />
+        <ProgressBar x:Name="ImportProgress" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Height="10" />
+        <TabControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6">
             <TabItem Header="Blahs">
                 <DataGrid  x:Name="BlahDataTable"  Margin="4" />
             </TabItem>

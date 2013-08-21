@@ -33,6 +33,7 @@ namespace BlahguaManager
         public string Data8;
         public string Data9;
         public string Data10;
+        public string Badge;
 
         private DataRow _dataRow;
 
@@ -41,6 +42,7 @@ namespace BlahguaManager
             Channel = curRow["Channel"].ToString().ToLower();
             Username = curRow["Username"].ToString();
             BlahType = curRow["Blah Type"].ToString().ToLower();
+            Badge = curRow["Badge"].ToString();
             Title = curRow["Title"].ToString();
             Body = curRow["Body"].ToString();
             Image = curRow["Image"].ToString();
@@ -56,7 +58,8 @@ namespace BlahguaManager
 
         public string GetData(int dataIndex)
         {
-            return _dataRow[10 + dataIndex].ToString();
+            string itemName = "Data " + (dataIndex + 1).ToString();
+            return _dataRow[itemName].ToString();
         }
 
         public string ImportBlah()
@@ -93,6 +96,12 @@ namespace BlahguaManager
             paramStr += createJsonParameter("Y", GetBlahTypeId());
             if (Body != "")
                 paramStr += ", " + createJsonParameter("F", Body);
+            if (Badge != "")
+            {
+                string badgeId = App.Blahgua.GetDefaultBadges();
+
+                paramStr += ", \"B\":[" + badgeId + "] ";
+            }
 
             // handle the blah types
             if (this.BlahType == "polls")
@@ -133,7 +142,7 @@ namespace BlahguaManager
 
                     if (Image != "")
                     {
-                        string curPath = ImagePath + "\\" + Image;
+                        string curPath =  Image;
                         App.Blahgua.AddFileToBlah(blahId, curPath);
                     }
 

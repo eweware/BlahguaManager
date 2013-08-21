@@ -99,49 +99,49 @@ namespace BlahguaManager
             if (City != "")
             {
                 paramStr += createJsonParameter("G", City) + ", ";
-                paramStr += createJsonParameter("6", City_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("6", City_public ? "2" : "0", false) + ", ";
             }
 
             if (State != "")
             {
                 paramStr += createJsonParameter("H", State) + ", ";
-                paramStr += createJsonParameter("7", State_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("7", State_public ? "2" : "0", false) + ", ";
             }
 
             if (Zipcode != "")
             {
                 paramStr += createJsonParameter("I", Zipcode) + ", ";
-                paramStr += createJsonParameter("8", Zipcode_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("8", Zipcode_public ? "2" : "0", false) + ", ";
             }
 
             if (Country != "")
             {
                 paramStr += createJsonParameter("J", FindCountryCode(Country)) + ", ";
-                paramStr += createJsonParameter("9", Country_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("9", Country_public ? "2" : "0", false) + ", ";
             }
 
             if (Gender != "")
             {
                 paramStr += createJsonParameter("B", FindGenderCode(Gender)) + ", ";
-                paramStr += createJsonParameter("1", Gender_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("1", Gender_public ? "2" : "0", false) + ", ";
             }
 
             if (DOB != "")
             {
                 paramStr += createJsonParameter("C", MakeDOB(DOB)) + ", ";
-                paramStr += createJsonParameter("2", DOB_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("2", DOB_public ? "2" : "0", false) + ", ";
             }
 
             if (Income != "")
             {
                 paramStr += createJsonParameter("E", FindIncomeCode(Income)) + ", ";
-                paramStr += createJsonParameter("4", Income_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("4", Income_public ? "2" : "0", false) + ", ";
             }
 
             if (Ethnicity != "")
             {
                 paramStr += createJsonParameter("D", FindEthnicityCode(Ethnicity)) + ", ";
-                paramStr += createJsonParameter("3", Ethnicity_public ? "2" : "0") + ", ";
+                paramStr += createJsonParameter("3", Ethnicity_public ? "2" : "0", false) + ", ";
             }
 
             paramStr = paramStr.Trim();
@@ -154,8 +154,8 @@ namespace BlahguaManager
 
                 if (Image != "")
                 {
-                    string curPath = ImagePath + "\\" + Image;
-                    //App.Blahgua.AddFileToPerson(blahId, curPath);
+                    string curPath = Image;
+                    App.Blahgua.AddImageToUser(curPath);
                 }
 
                 resultStr = "";

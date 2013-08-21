@@ -24,6 +24,9 @@ namespace BlahguaManager
         private StreamWriter logFile = null;
         private String currentFileName = "";
         static AmazonS3 client;
+        private bool importingFromQA = true;
+        public String CurrentUser = "";
+        public string DefaultFolderPath = "";
 
         public WebServiceHelper()
         {
@@ -35,6 +38,21 @@ namespace BlahguaManager
                                 "u8X5HGbFncW6knOScgDUBMrdLF+lrgSucmGjM0it");
             //
  
+        }
+
+        public bool ImportToQA
+        {
+            set 
+            {
+                if (value != importingFromQA)
+                { 
+                    importingFromQA = value;
+                }
+            }
+            get
+            {
+                return importingFromQA;
+            }
         }
 
         public void StartLogFile() 
@@ -80,8 +98,8 @@ namespace BlahguaManager
 
         // helper functions
         // RESTful helping methods // ec2-50-17-23-5.compute-1.amazonaws.com
-        //public static string serverURL = @"beta.blahgua.com"; // production
-        public static string serverURL = @"qa.rest.blahgua.com"; // production
+        public static string prodURL = @"beta.blahgua.com"; // production
+        public static string qaURL = @"qa.rest.blahgua.com"; // production
 
         private string subURL = "v2";
         private bool _usingDefaultUser = true;
@@ -98,11 +116,19 @@ namespace BlahguaManager
         public Uri CreateURIfromBaseURL(string path, string query = "")
         {
             UriBuilder builder = new UriBuilder();
-            builder.Host = serverURL;
-            builder.Path = path;
-            //builder.Scheme = "https"; 
-            builder.Scheme = "http";
-            builder.Port = 8080;
+            if (ImportToQA)
+            {
+                builder.Host = qaURL;
+                builder.Path = path;
+                builder.Scheme = "http";
+                builder.Port = 8080;
+            }
+            else
+            {
+                builder.Host = prodURL;
+                builder.Path = path;
+                builder.Scheme = "https"; 
+            }
 
             builder.Query = query;
             Uri result = builder.Uri;
@@ -366,6 +392,62 @@ namespace BlahguaManager
         }
 
 
+        public string GetDefaultBadges()
+        {
+            string badgeStr = "";
+            StringReader jsonStr = new StringReader(CurrentUser);
+            Newtonsoft.Json.JsonTextReader reader = new Newtonsoft.Json.JsonTextReader(jsonStr);
+
+            while (reader.Read())
+            {
+                System.Console.WriteLine(reader.TokenType);
+                if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
+                {
+                    System.Console.WriteLine(" ==> " + reader.Value.ToString());
+                    if (reader.Value.ToString() == "B")
+                    {
+                        reader.Read();
+                        if (reader.TokenType == Newtonsoft.Json.JsonToken.StartArray)
+                        {
+                            reader.Read();
+
+                            while (reader.TokenType != Newtonsoft.Json.JsonToken.EndArray)
+                            {
+                                if (badgeStr != "")
+                                    badgeStr += ", ";
+                                badgeStr += "\"" + reader.Value.ToString() + "\"";
+                                reader.Read();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return badgeStr;
+        }
+
+        public string GetCurrentUserId()
+        {
+            string idStr = "";
+            StringReader jsonStr = new StringReader(CurrentUser);
+            Newtonsoft.Json.JsonTextReader reader = new Newtonsoft.Json.JsonTextReader(jsonStr);
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
+                {
+                    if (reader.Value.ToString() == "_id")
+                    {
+                        reader.Read();
+                        idStr = reader.Value.ToString();
+                        break;
+                    }
+                }
+            }
+            return idStr;
+        }
 
 
         /// <summary>
@@ -377,6 +459,7 @@ namespace BlahguaManager
         /// <returns></returns>
         public static string GetJSONProperty(string json, string propName, string defaultVal = "missing")
         {
+            
             string resultStr = defaultVal;
             string searchStr = "\"" + propName + "\":";
             int startIndex = json.IndexOf(searchStr);
@@ -491,7 +574,12 @@ namespace BlahguaManager
 
             jsonData = "{\"N\":\"" + userName + "\", \"pwd\":\"" + passWord + "\"}";
 
-            return PostDataToService(commandURI, jsonData);
+            PostDataToService(commandURI, jsonData);
+            string userStr = CreateRESTBaseURL("users/info");
+            commandURI = CreateURIfromBaseURL(userStr);
+            CurrentUser = GetDataFromService(commandURI);
+
+            return "";
         }
 
         public string LogoutUser()
@@ -505,6 +593,7 @@ namespace BlahguaManager
             userGroupNames = null;
             string resultStr = PostDataToService(commandURI, jsonData);
             sessionCookie = null;
+            CurrentUser = "";
             return resultStr; 
         }
 
@@ -627,14 +716,29 @@ namespace BlahguaManager
 
         public bool AddFileToBlah(string blahId, string fileName)
         {
+            return AddFileToObject(blahId, fileName, "B");
+        }
+
+        public bool AddImageToUser(string fileName)
+        {
+            string userId = GetCurrentUserId();
+            return AddFileToObject(userId, fileName, "U");
+        }
+
+        public bool AddFileToObject(string objectId, string fName, string objType)
+        {
+            string fileName = DefaultFolderPath + "\\" + fName;
             if (File.Exists(fileName))
             {
                 NameValueCollection nvc = new NameValueCollection();
-                nvc.Add("objectType", "B");
+                nvc.Add("objectType", objType);
                 nvc.Add("primary", "true");
-                nvc.Add("objectId", blahId);
+                nvc.Add("objectId", objectId);
 
-                HttpUploadFile("https://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
+                if (ImportToQA)
+                    HttpUploadFile("http://qa.rest.blahgua.com:8080/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
+                else
+                    HttpUploadFile("https://beta.blahgua.com/v2/images/upload", fileName, "file", "application/octet-stream", nvc);
                 return true;
             }
             else 
